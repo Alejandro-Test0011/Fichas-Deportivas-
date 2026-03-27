@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corazón del Táchira - Sistema en la Nube</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'media', 
+        }
+    </script>
+
+    <style>
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        textarea::-webkit-scrollbar { width: 0px; }
+        
+        @keyframes float {
+            0% { transform: translateY(0px) scale(1); }
+            33% { transform: translateY(-30px) scale(1.05); }
+            66% { transform: translateY(20px) scale(0.95); }
+            100% { transform: translateY(0px) scale(1); }
+        }
+        .animate-float-slow { animation: float 15s ease-in-out infinite; }
+        .animate-float-delayed { animation: float 18s ease-in-out infinite; animation-delay: -5s; }
+        .animate-float-fast { animation: float 12s ease-in-out infinite; animation-delay: -2s; }
+
+        @media print {
+            body { background: white !important; padding: 0 !important; color: black !important; }
+            .print\:hidden { display: none !important; }
+            textarea, input { border: none !important; outline: none !important; background: transparent !important; resize: none !important;}
+            .shadow-2xl, .shadow-lg, .shadow-sm { box-shadow: none !important; }
+            .rounded-\[2rem\], .rounded-\[3rem\] { border-radius: 0.5rem !important; }
+            .max-w-4xl, .max-w-5xl { max-width: 100% !important; margin: 0 !important; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 font-sans min-h-screen relative overflow-x-hidden selection:bg-red-500/30 transition-colors duration-500">
+
+    <!-- FONDO MODERNO PREMIUM -->
+    <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none print:hidden transition-colors duration-700 bg-slate-50 dark:bg-slate-950">
+        <div class="absolute inset-0 dark:hidden">
+            <div class="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-gradient-to-br from-red-200/60 to-rose-100/50 blur-[80px] animate-float-slow"></div>
+            <div class="absolute bottom-[-10%] right-[-10%] w-[40vw] h-[40vw] rounded-full bg-gradient-to-tl from-slate-300/50 to-white/50 blur-[60px] animate-float-delayed"></div>
+            <div class="absolute top-[30%] left-[40%] w-[30vw] h-[30vw] rounded-full bg-gradient-to-tr from-red-100/50 to-transparent blur-[80px] animate-float-fast"></div>
+            <div class="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)] opacity-50"></div>
+        </div>
+        <div class="absolute inset-0 hidden dark:block">
+            <div class="absolute top-[-20%] left-[-10%] w-[60vw] h-[60vw] rounded-full bg-gradient-to-br from-red-900/30 to-rose-900/10 blur-[100px] animate-float-slow"></div>
+            <div class="absolute bottom-[-20%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-gradient-to-tl from-red-950/40 to-slate-900/40 blur-[100px] animate-float-delayed"></div>
+            <div class="absolute top-[20%] left-[30%] w-[40vw] h-[40vw] rounded-full bg-gradient-to-tr from-rose-900/20 to-transparent blur-[80px] animate-float-fast"></div>
+            <div class="absolute inset-0 bg-[radial-gradient(#ffffff15_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)]"></div>
+            <div class="absolute inset-0 bg-slate-950 [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,transparent_20%,black_100%)] pointer-events-none"></div>
+        </div>
+    </div>
+
+    <!-- PANEL PRINCIPAL (DASHBOARD) -->
+    <div id="dashboard-view" class="p-6 md:p-12 pb-24 max-w-5xl mx-auto fade-in">
+        <div class="text-center mb-12 relative">
+            <div class="inline-flex items-center justify-center w-28 h-28 mb-4 relative z-10">
+                <div class="absolute inset-0 bg-white/20 dark:bg-white/5 rounded-full blur-xl"></div>
+                <img src="logo.png" alt="Logo Principal Corazón del Táchira" class="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(220,38,38,0.2)] relative z-10" onerror="this.src='https://ui-avatars.com/api/?name=C+T&background=b91c1c&color=fff&size=150'">
+            </div>
+            <h1 class="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-slate-800 to-slate-500 dark:from-white dark:to-slate-400 tracking-tight drop-shadow-sm mb-2">Corazón del Táchira</h1>
+            <p class="text-emerald-600 dark:text-emerald-400 font-bold flex items-center justify-center gap-2 text-sm uppercase tracking-widest bg-white/60 dark:bg-slate-900/50 backdrop-blur-sm inline-flex px-4 py-1.5 rounded-full border border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-inner">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
+                Rendimiento en vivo
+            </p>
+        </div>
+
+        <div class="mb-14">
+            <h2 class="text-sm font-bold text-slate-500 dark:text-slate-400 mb-6 text-center uppercase tracking-widest flex items-center justify-center gap-4">
+                <span class="h-px w-12 bg-slate-300 dark:bg-slate-800"></span>
+                Selecciona al Entrenador
+                <span class="h-px w-12 bg-slate-300 dark:bg-slate-800"></span>
+            </h2>
+            <div id="coaches-container" class="flex flex-wrap justify-center gap-4 md:gap-6"></div>
+        </div>
+
+        <div id="athletes-section" style="display: none;" class="fade-in">
+            <div class="flex flex-wrap items-center gap-4 mb-8 border-b border-slate-200 dark:border-slate-800 pb-6">
+                <div class="bg-red-50 dark:bg-red-500/10 p-3 rounded-xl border border-red-100 dark:border-red-500/20 hidden sm:block">
+                    <i data-lucide="users" class="text-red-500 dark:text-red-400 w-6 h-6"></i>
+                </div>
+                <h2 class="text-xl sm:text-2xl font-black text-slate-800 dark:text-white flex-1 min-w-[200px] drop-shadow-sm dark:drop-shadow-md">
+                    Equipo de <span id="current-coach-name" class="text-red-600 dark:text-red-500"></span>
+                </h2>
+                <div class="flex items-center gap-3 w-full sm:w-auto mt-2 sm:mt-0">
+                    <span id="athletes-count" class="bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-4 py-2 sm:py-2.5 rounded-xl text-sm font-bold text-center flex-shrink-0 border border-slate-200 dark:border-slate-700 shadow-sm dark:shadow-inner">
+                        0
+                    </span>
+                    <button onclick="window.agregarAtleta()" class="flex-1 sm:flex-none justify-center bg-gradient-to-r from-red-500 to-red-700 dark:from-red-600 dark:to-red-800 hover:from-red-600 hover:to-red-800 dark:hover:from-red-500 dark:hover:to-red-700 text-white px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all active:scale-95 shadow-[0_5px_15px_rgba(220,38,38,0.2)] dark:shadow-[0_0_20px_rgba(220,38,38,0.3)] border border-red-400 dark:border-red-500/50">
+                        <i data-lucide="user-plus" class="w-4 h-4"></i> Nuevo Atleta
+                    </button>
+                </div>
+            </div>
+
+            <div id="athletes-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 pb-12"></div>
+        </div>
+    </div>
+
+    <!-- FICHA DEPORTIVA -->
+    <div id="ficha-view" class="bg-slate-100 text-slate-800 p-3 sm:p-4 md:p-8 min-h-screen fade-in relative z-50" style="display: none;">
+        
+        <div class="max-w-4xl mx-auto mb-6 flex flex-col md:flex-row justify-between gap-4 print:hidden">
+            <button onclick="window.cerrarVista('ficha-view')" class="w-full md:w-auto flex justify-center items-center gap-2 bg-white text-slate-700 hover:text-red-600 px-4 py-3 md:py-2 rounded-full font-bold shadow-sm border border-slate-200 transition-all active:scale-95">
+                <i data-lucide="chevron-left" class="w-5 h-5"></i> Volver al Panel
+            </button>
+            <div class="flex flex-row gap-2 md:gap-3 w-full md:w-auto flex-wrap sm:flex-nowrap">
+                <button onclick="window.abrirInforme()" class="flex-1 md:flex-none flex justify-center items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-4 md:px-6 py-3 md:py-2 rounded-full font-bold shadow-lg shadow-indigo-600/30 transition-transform active:scale-95 border border-indigo-500">
+                    <i data-lucide="activity" class="w-5 h-5"></i> Informe<span class="hidden sm:inline"> Físico</span>
+                </button>
+                <button onclick="window.guardarTodo()" class="flex-1 md:flex-none flex justify-center items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-4 md:px-6 py-3 md:py-2 rounded-full font-bold shadow-lg shadow-emerald-500/30 transition-transform active:scale-95 border border-emerald-400">
+                    <i data-lucide="save" class="w-5 h-5"></i> Guardar<span class="hidden sm:inline"> Nube</span>
+                </button>
+                <button onclick="window.print()" class="flex-1 md:flex-none flex justify-center items-center gap-2 bg-red-600 hover:bg-red-500 text-white px-4 md:px-6 py-3 md:py-2 rounded-full font-bold shadow-lg shadow-red-600/30 transition-transform active:scale-95 border border-red-500">
+                    <i data-lucide="printer" class="w-5 h-5"></i> Imprimir
+                </button>
+            </div>
+        </div>
+
+        <div class="max-w-4xl mx-auto bg-white rounded-[2rem] shadow-2xl overflow-hidden border-8 border-white relative print:shadow-none print:border-none">
+            
+            <div class="pt-8 pb-16 bg-gradient-to-br from-red-600 via-red-800 to-slate-900 flex items-start justify-between px-6 md:px-10 text-white relative overflow-hidden">
+                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay print:hidden"></div>
+                <div class="flex-1 z-10 relative">
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 text-[10px] font-bold tracking-widest uppercase text-yellow-300 mb-3 shadow-sm backdrop-blur-sm print:hidden">
+                        <span class="w-1.5 h-1.5 rounded-full bg-yellow-400 animate-pulse"></span>Registro de Atleta
+                    </div>
+                    <h1 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter drop-shadow-lg text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-300 print:text-black print:bg-none">
+                        Ficha Deportiva
+                    </h1>
+                    <p id="ficha-equipo-nombre" class="text-red-200 font-bold tracking-wider uppercase text-xs mt-1 drop-shadow-sm flex items-center gap-1 print:text-slate-600"></p>
+                </div>
+                <div class="flex items-center gap-3 md:gap-6 z-10 relative">
+                    <div class="hidden md:block opacity-40 transform -translate-y-2 text-yellow-400 drop-shadow-xl print:text-slate-200"><i data-lucide="trophy" style="width: 75px; height: 75px;"></i></div>
+                    <div class="w-16 h-16 md:w-20 md:h-20 bg-white p-1 md:p-1.5 rounded-2xl shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-300 ring-4 ring-white/10 print:ring-0 print:shadow-none">
+                        <img src="escudo.png" alt="Escudo Ficha Corazón del Táchira" class="w-full h-full object-contain rounded-xl" onerror="this.src='escudo.jpg'">
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-6 md:p-10 -mt-10 bg-white rounded-t-[3rem] relative z-10 shadow-[0_-10px_40px_rgba(0,0,0,0.15)] print:shadow-none text-slate-800">
+                <div class="flex flex-col md:grid md:grid-cols-3 gap-6 md:gap-8">
+                    
+                    <div class="order-1 md:col-start-1 md:row-start-1 flex flex-col gap-6">
+                        <div class="relative aspect-[3/4] bg-slate-200 rounded-3xl overflow-hidden border-4 border-white shadow-xl group">
+                            <img id="ficha-img" src="" class="w-full h-full object-cover">
+                            <div id="overlay-no-photo" class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity cursor-pointer print:hidden hidden" onclick="document.getElementById('file-upload').click()">
+                                <p class="text-white font-bold flex items-center gap-2"><i data-lucide="camera" class="w-5 h-5"></i> Subir Foto</p>
+                            </div>
+                            <div id="overlay-has-photo" class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center gap-3 transition-opacity print:hidden hidden">
+                                <button onclick="document.getElementById('file-upload').click()" class="bg-slate-700 hover:bg-slate-800 text-white px-5 py-2 rounded-full font-bold text-sm flex items-center gap-2 transition-transform active:scale-95 border border-slate-500"><i data-lucide="camera" class="w-4 h-4"></i> Reemplazar</button>
+                                <button onclick="window.eliminarFoto()" class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-full font-bold text-sm flex items-center gap-2 transition-transform active:scale-95 border border-red-400"><i data-lucide="trash-2" class="w-4 h-4"></i> Eliminar</button>
+                            </div>
+                            <input type="file" id="file-upload" class="hidden" accept="image/*" onchange="window.subirFoto(event)">
+                        </div>
+
+                        <div class="bg-gradient-to-br from-red-600 to-red-800 rounded-[2rem] p-5 text-white shadow-xl border border-red-500 relative overflow-hidden group print:border-none print:shadow-none">
+                            <div class="absolute -right-4 -top-4 opacity-10 text-white transform rotate-12 transition-transform group-hover:rotate-45"><i data-lucide="hash" class="w-24 h-24"></i></div>
+                            <div class="relative z-10 flex items-center justify-between">
+                                <div class="flex flex-col flex-1">
+                                    <span class="text-[10px] font-bold uppercase tracking-widest opacity-80 mb-1">Dorsal</span>
+                                    <input type="text" id="ficha-numero" class="text-5xl font-black bg-transparent w-full outline-none placeholder:text-white/40" placeholder="00">
+                                </div>
+                                <div class="flex flex-col items-end border-l border-white/20 pl-4 ml-2">
+                                    <span class="text-[10px] font-bold uppercase tracking-widest opacity-80 mb-1">Posición</span>
+                                    <input type="text" id="ficha-posicion" class="text-sm font-bold uppercase bg-transparent w-24 text-right outline-none placeholder:text-white/40" placeholder="JUGADOR">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="order-2 md:col-start-2 md:col-span-2 md:row-start-1 md:row-span-2 space-y-6" id="ficha-formularios">
+                        <!-- Generado dinamicamente -->
+                    </div>
+
+                    <div class="order-3 md:col-start-1 md:row-start-2 w-full" id="ficha-trayectoria">
+                        <!-- Generado dinamicamente -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NUEVO: VISTA DE INFORME FÍSICO -->
+    <div id="informe-view" class="bg-slate-100 text-slate-800 p-3 sm:p-4 md:p-8 min-h-screen fade-in relative z-50" style="display: none;">
+        
+        <div class="max-w-5xl mx-auto mb-6 flex flex-col md:flex-row justify-between gap-4 print:hidden">
+            <button onclick="window.volverAFicha()" class="w-full md:w-auto flex justify-center items-center gap-2 bg-white text-slate-700 hover:text-indigo-600 px-4 py-3 md:py-2 rounded-full font-bold shadow-sm border border-slate-200 transition-all active:scale-95">
+                <i data-lucide="chevron-left" class="w-5 h-5"></i> Regresar a Ficha
+            </button>
+            <div class="flex flex-row gap-2 md:gap-3 w-full md:w-auto">
+                <button onclick="window.guardarTodo()" class="flex-1 md:flex-none flex justify-center items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-4 md:px-6 py-3 md:py-2 rounded-full font-bold shadow-lg shadow-emerald-500/30 transition-transform active:scale-95 border border-emerald-400">
+                    <i data-lucide="save" class="w-5 h-5"></i> Guardar Todo
+                </button>
+                <button onclick="window.print()" class="flex-1 md:flex-none flex justify-center items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-4 md:px-6 py-3 md:py-2 rounded-full font-bold shadow-lg shadow-indigo-600/30 transition-transform active:scale-95 border border-indigo-500">
+                    <i data-lucide="printer" class="w-5 h-5"></i> Imprimir Reporte
+                </button>
+            </div>
+        </div>
+
+        <div class="max-w-5xl mx-auto bg-white rounded-[2rem] shadow-2xl overflow-hidden border-8 border-white relative print:shadow-none print:border-none">
+            
+            <!-- Cabecera del Informe -->
+            <div class="pt-8 pb-16 bg-gradient-to-br from-indigo-700 via-indigo-900 to-slate-900 flex items-center justify-between px-6 md:px-10 text-white relative overflow-hidden">
+                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay print:hidden"></div>
+                <div class="flex-1 z-10 relative">
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 text-[10px] font-bold tracking-widest uppercase text-cyan-300 mb-3 shadow-sm backdrop-blur-sm print:hidden">
+                        <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>Evolución Táctica
+                    </div>
+                    <h1 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter drop-shadow-lg text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-300 print:text-black print:bg-none">
+                        Informe Físico
+                    </h1>
+                    <p id="informe-nombre-atleta" class="text-indigo-200 font-bold tracking-widest uppercase text-sm mt-2 drop-shadow-sm flex items-center gap-2 print:text-slate-600">
+                        <i data-lucide="user" class="w-4 h-4"></i> <span></span>
+                    </p>
+                </div>
+                <div class="hidden md:block opacity-40 transform -translate-y-2 text-cyan-400 drop-shadow-xl print:text-slate-200 z-10">
+                    <i data-lucide="activity" style="width: 80px; height: 80px;"></i>
+                </div>
+            </div>
+
+            <!-- Cuerpo del Informe -->
+            <div class="p-6 md:p-10 -mt-10 bg-white rounded-t-[3rem] relative z-10 shadow-[0_-10px_40px_rgba(0,0,0,0.15)] print:shadow-none text-slate-800">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+                    
+                    <!-- Lado Izquierdo: Inputs de Datos -->
+                    <div class="flex flex-col gap-6">
+                        <h3 class="text-lg font-black text-slate-800 uppercase tracking-tight border-b-2 border-indigo-100 pb-2 mb-2 flex items-center gap-2"><i data-lucide="clipboard-list" class="w-5 h-5 text-indigo-500"></i> Carga de Datos</h3>
+                        
+                        <!-- Bloque de Velocidad -->
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                            <div class="flex items-center gap-2 mb-3 text-indigo-600 font-bold uppercase text-xs tracking-wider"><i data-lucide="timer" class="w-4 h-4"></i> Velocidad (Segundos)</div>
+                            <div class="flex gap-4">
+                                <div class="flex-1">
+                                    <label class="text-[10px] text-slate-500 font-bold uppercase mb-1 block">Inicio Temp.</label>
+                                    <input type="number" id="in-vel-ini" oninput="window.actualizarGraficos()" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 font-bold text-center outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400" placeholder="0.0">
+                                </div>
+                                <div class="flex-1">
+                                    <label class="text-[10px] text-indigo-500 font-bold uppercase mb-1 block">Actual/Final</label>
+                                    <input type="number" id="in-vel-fin" oninput="window.actualizarGraficos()" class="w-full bg-white border border-indigo-200 shadow-sm rounded-xl p-2.5 font-bold text-indigo-700 text-center outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400" placeholder="0.0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bloque de Agilidad -->
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                            <div class="flex items-center gap-2 mb-3 text-emerald-600 font-bold uppercase text-xs tracking-wider"><i data-lucide="zap" class="w-4 h-4"></i> Agilidad (Segundos)</div>
+                            <div class="flex gap-4">
+                                <div class="flex-1">
+                                    <label class="text-[10px] text-slate-500 font-bold uppercase mb-1 block">Inicio Temp.</label>
+                                    <input type="number" id="in-agi-ini" oninput="window.actualizarGraficos()" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 font-bold text-center outline-none focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400" placeholder="0.0">
+                                </div>
+                                <div class="flex-1">
+                                    <label class="text-[10px] text-emerald-600 font-bold uppercase mb-1 block">Actual/Final</label>
+                                    <input type="number" id="in-agi-fin" oninput="window.actualizarGraficos()" class="w-full bg-white border border-emerald-200 shadow-sm rounded-xl p-2.5 font-bold text-emerald-700 text-center outline-none focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400" placeholder="0.0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bloque de Explosividad -->
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                            <div class="flex items-center gap-2 mb-3 text-rose-600 font-bold uppercase text-xs tracking-wider"><i data-lucide="flame" class="w-4 h-4"></i> Explosividad (cm / salto)</div>
+                            <div class="flex gap-4">
+                                <div class="flex-1">
+                                    <label class="text-[10px] text-slate-500 font-bold uppercase mb-1 block">Inicio Temp.</label>
+                                    <input type="number" id="in-exp-ini" oninput="window.actualizarGraficos()" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 font-bold text-center outline-none focus:ring-2 focus:ring-rose-400 focus:border-rose-400" placeholder="0">
+                                </div>
+                                <div class="flex-1">
+                                    <label class="text-[10px] text-rose-600 font-bold uppercase mb-1 block">Actual/Final</label>
+                                    <input type="number" id="in-exp-fin" oninput="window.actualizarGraficos()" class="w-full bg-white border border-rose-200 shadow-sm rounded-xl p-2.5 font-bold text-rose-700 text-center outline-none focus:ring-2 focus:ring-rose-400 focus:border-rose-400" placeholder="0">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lado Derecho: Gráficas y Resumen -->
+                    <div class="flex flex-col gap-6">
+                        <h3 class="text-lg font-black text-slate-800 uppercase tracking-tight border-b-2 border-indigo-100 pb-2 mb-2 flex items-center gap-2"><i data-lucide="bar-chart" class="w-5 h-5 text-indigo-500"></i> Análisis Visual</h3>
+                        
+                        <!-- Contenedor de las barras -->
+                        <div class="bg-white border border-slate-200 rounded-3xl p-5 md:p-6 shadow-sm space-y-6">
+                            
+                            <!-- Gráfica Velocidad -->
+                            <div>
+                                <div class="flex justify-between text-xs font-bold text-slate-500 mb-2 uppercase"><span>Velocidad</span> <span class="text-indigo-600">Comparativa</span></div>
+                                <div class="space-y-2">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-[10px] font-bold text-slate-400 w-8 text-right">INICIO</span>
+                                        <div class="flex-1 bg-slate-100 rounded-full h-3.5 overflow-hidden"><div id="bar-vel-ini" class="bg-slate-400 h-full rounded-full transition-all duration-700 w-0"></div></div>
+                                        <span class="text-xs font-bold text-slate-600 w-10" id="val-vel-ini">0s</span>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-[10px] font-bold text-indigo-500 w-8 text-right">ACTUAL</span>
+                                        <div class="flex-1 bg-slate-100 rounded-full h-3.5 overflow-hidden"><div id="bar-vel-fin" class="bg-indigo-500 h-full rounded-full transition-all duration-700 w-0 shadow-[0_0_10px_rgba(99,102,241,0.5)]"></div></div>
+                                        <span class="text-xs font-black text-indigo-600 w-10" id="val-vel-fin">0s</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="border-slate-100">
+
+                            <!-- Gráfica Agilidad -->
+                            <div>
+                                <div class="flex justify-between text-xs font-bold text-slate-500 mb-2 uppercase"><span>Agilidad</span> <span class="text-emerald-600">Comparativa</span></div>
+                                <div class="space-y-2">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-[10px] font-bold text-slate-400 w-8 text-right">INICIO</span>
+                                        <div class="flex-1 bg-slate-100 rounded-full h-3.5 overflow-hidden"><div id="bar-agi-ini" class="bg-slate-400 h-full rounded-full transition-all duration-700 w-0"></div></div>
+                                        <span class="text-xs font-bold text-slate-600 w-10" id="val-agi-ini">0s</span>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-[10px] font-bold text-emerald-600 w-8 text-right">ACTUAL</span>
+                                        <div class="flex-1 bg-slate-100 rounded-full h-3.5 overflow-hidden"><div id="bar-agi-fin" class="bg-emerald-500 h-full rounded-full transition-all duration-700 w-0 shadow-[0_0_10px_rgba(16,185,129,0.5)]"></div></div>
+                                        <span class="text-xs font-black text-emerald-600 w-10" id="val-agi-fin">0s</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="border-slate-100">
+
+                            <!-- Gráfica Explosividad -->
+                            <div>
+                                <div class="flex justify-between text-xs font-bold text-slate-500 mb-2 uppercase"><span>Explosividad</span> <span class="text-rose-600">Comparativa</span></div>
+                                <div class="space-y-2">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-[10px] font-bold text-slate-400 w-8 text-right">INICIO</span>
+                                        <div class="flex-1 bg-slate-100 rounded-full h-3.5 overflow-hidden"><div id="bar-exp-ini" class="bg-slate-400 h-full rounded-full transition-all duration-700 w-0"></div></div>
+                                        <span class="text-xs font-bold text-slate-600 w-10" id="val-exp-ini">0cm</span>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-[10px] font-bold text-rose-600 w-8 text-right">ACTUAL</span>
+                                        <div class="flex-1 bg-slate-100 rounded-full h-3.5 overflow-hidden"><div id="bar-exp-fin" class="bg-rose-500 h-full rounded-full transition-all duration-700 w-0 shadow-[0_0_10px_rgba(244,63,94,0.5)]"></div></div>
+                                        <span class="text-xs font-black text-rose-600 w-10" id="val-exp-fin">0cm</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Evaluación Cualitativa del Coach -->
+                        <div class="bg-slate-800 rounded-3xl p-5 shadow-lg border border-slate-700 print:bg-slate-50 print:border-slate-200">
+                            <h3 class="flex items-center gap-2 text-white font-bold mb-3 text-xs uppercase tracking-wider print:text-slate-800">
+                                <i data-lucide="message-square" class="w-4 h-4 text-indigo-400 print:text-indigo-600"></i> Reporte del Entrenador
+                            </h3>
+                            <textarea id="in-reporte-fisico" class="w-full bg-slate-900/50 rounded-xl p-4 text-sm font-medium text-slate-200 placeholder:text-slate-600 outline-none focus:ring-2 focus:ring-indigo-500 resize-none h-32 border border-slate-700 shadow-inner transition-all print:bg-white print:text-slate-800 print:border-slate-200" placeholder="Escribe aquí tus observaciones sobre la evolución del jugador, áreas a mejorar y conclusiones del ciclo..."></textarea>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Borrar / Toast (Ocultos) -->
+    <div id="modal-borrar" class="fixed inset-0 bg-slate-900/60 dark:bg-slate-950/80 backdrop-blur-sm z-[60] flex items-center justify-center hidden opacity-0 transition-opacity print:hidden">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 max-w-sm w-full mx-4 transform scale-95 transition-transform shadow-[0_20px_50px_rgba(0,0,0,0.3)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]" id="modal-borrar-content">
+            <div class="w-20 h-20 bg-red-50 dark:bg-red-500/10 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6 border border-red-100 dark:border-red-500/20"><i data-lucide="alert-triangle" class="w-10 h-10"></i></div>
+            <h3 class="text-2xl font-black text-center text-slate-800 dark:text-white mb-2">¿Borrar Atleta?</h3>
+            <p class="text-center text-slate-500 dark:text-slate-400 mb-8 font-medium leading-relaxed" id="texto-borrar">¿Estás seguro de que quieres borrar a este atleta?</p>
+            <div class="flex gap-3">
+                <button onclick="window.cancelarBorrado()" class="flex-1 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold py-3 rounded-xl transition-colors border border-transparent dark:border-slate-700">Cancelar</button>
+                <button onclick="window.ejecutarBorrado()" class="flex-1 bg-red-600 hover:bg-red-700 dark:hover:bg-red-500 text-white font-bold py-3 rounded-xl transition-colors shadow-[0_5px_15px_rgba(220,38,38,0.3)] dark:shadow-[0_0_15px_rgba(220,38,38,0.4)] border border-red-600 dark:border-red-500">Sí, borrar</button>
+            </div>
+        </div>
+    </div>
+    <div id="toast-notificacion" class="fixed top-5 right-5 bg-emerald-500 text-white px-6 py-3 rounded-xl shadow-[0_10px_20px_rgba(16,185,129,0.3)] border border-emerald-400 transform -translate-y-20 opacity-0 transition-all duration-300 z-[70] flex items-center gap-3 print:hidden">
+        <i data-lucide="cloud-lightning" id="toast-icon" class="w-5 h-5"></i><span id="toast-mensaje" class="font-bold"></span>
+    </div>
+
+    <!-- --- LÓGICA DE FIREBASE --- -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, doc, setDoc, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAorngnrSLH59awA4lAqz6EX6RLJugyaIQ",
+            authDomain: "fichas-de-atletas.firebaseapp.com",
+            projectId: "fichas-de-atletas",
+            storageBucket: "fichas-de-atletas.firebasestorage.app",
+            messagingSenderId: "316687263246",
+            appId: "1:316687263246:web:f011719d3be405165a7e5f",
+            measurementId: "G-6ZT3DHJXPG"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        let refAtletas; 
+
+        window.athletes = [];
+        window.selectedCoach = null;
+        window.currentKidId = null;
+        window.atletaABorrar = null; 
+        
+        window.getAvatarUrl = function(nombre, apellidos) {
+            const n = nombre || 'A';
+            const a = apellidos || '';
+            return `https://ui-avatars.com/api/?name=${encodeURIComponent(n + ' ' + a)}&background=fecaca&color=b91c1c&size=300&font-size=0.33`;
+        };
+        
+        const coaches = [
+            { name: "Ethan", color: "bg-blue-600", initials: "ET" },
+            { name: "Alexandra", color: "bg-purple-600", initials: "AL" },
+            { name: "Brandonth", color: "bg-emerald-600", initials: "BR" }
+        ];
+
+        async function iniciarBaseDeDatos() {
+            try { await signInAnonymously(auth); } catch (error) { console.error("Error al autenticar:", error); }
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    refAtletas = collection(db, 'atletas'); 
+                    onSnapshot(refAtletas, (snapshot) => {
+                        window.athletes = [];
+                        snapshot.forEach((doc) => { window.athletes.push({ id: doc.id, ...doc.data() }); });
+                        if (window.selectedCoach) { renderCoaches(); renderAthletesGrid(window.selectedCoach); }
+                    }, (error) => { console.error("Error leyendo datos: ", error); });
+                }
+            });
+        }
+
+        function renderCoaches() {
+            const container = document.getElementById('coaches-container');
+            container.innerHTML = '';
+            coaches.forEach(coach => {
+                const isSelected = window.selectedCoach === coach.name;
+                const btnClasses = isSelected 
+                    ? 'border-red-500 bg-white shadow-[0_0_20px_rgba(220,38,38,0.2)] scale-105 dark:bg-slate-800/80 dark:shadow-[0_0_20px_rgba(220,38,38,0.2)]' 
+                    : 'border-slate-200 bg-white/60 backdrop-blur-sm shadow-md hover:shadow-lg hover:-translate-y-1 hover:bg-white/80 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900/60 dark:hover:bg-slate-800/80 dark:hover:border-slate-600';
+                const textClasses = isSelected ? 'text-slate-900 dark:text-white' : 'text-slate-600 dark:text-slate-400';
+                const avatarBorder = isSelected ? 'ring-2 ring-red-500/50' : 'border border-white dark:border-slate-700';
+
+                const btn = document.createElement('button');
+                btn.className = `flex flex-col items-center p-6 w-32 md:w-40 rounded-[2rem] transition-all duration-300 border ${btnClasses}`;
+                btn.onclick = () => window.selectCoach(coach.name);
+                btn.innerHTML = `
+                    <div class="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl mb-4 shadow-inner ${coach.color} ${avatarBorder}">${coach.initials}</div>
+                    <span class="font-bold ${textClasses}">${coach.name}</span>
+                `;
+                container.appendChild(btn);
+            });
+        }
+
+        function renderAthletesGrid(coachName) {
+            const filtrados = window.athletes.filter(a => a.coach === coachName);
+            document.getElementById('current-coach-name').innerText = coachName;
+            document.getElementById('athletes-count').innerText = `${filtrados.length} Atletas`;
+            const grid = document.getElementById('athletes-grid');
+            grid.innerHTML = '';
+            
+            if (filtrados.length > 0) {
+                filtrados.forEach(kid => {
+                    const card = document.createElement('div');
+                    card.className = "relative bg-white/80 dark:bg-slate-900/50 backdrop-blur-md p-5 rounded-[2rem] shadow-md dark:shadow-lg hover:shadow-[0_10px_30px_rgba(220,38,38,0.1)] dark:hover:shadow-[0_10px_30px_rgba(220,38,38,0.15)] hover:-translate-y-1 transition-all cursor-pointer border border-slate-200 dark:border-slate-800 hover:border-red-400 dark:hover:border-red-500/50 group text-center";
+                    card.onclick = () => window.abrirFicha(kid);
+                    const esFotoGenerica = !kid.photo || kid.photo.includes('placeholder.com') || kid.photo.includes('ui-avatars.com');
+                    const fotoMostrar = esFotoGenerica ? window.getAvatarUrl(kid.name, kid.apellidos) : kid.photo;
+
+                    card.innerHTML = `
+                        <button onclick="window.confirmarBorrado('${kid.id}', '${kid.name}', event)" class="absolute top-3 right-3 bg-slate-100 dark:bg-slate-800 hover:bg-red-100 dark:hover:bg-red-500/20 text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 p-2 rounded-full transition-colors z-10 print:hidden border border-slate-200 dark:border-slate-700 hover:border-red-200 dark:hover:border-red-500/30">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
+                        <div class="w-20 h-20 mx-auto bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden mb-4 ring-4 ring-slate-100 dark:ring-slate-900 group-hover:ring-red-100 dark:group-hover:ring-red-500/30 transition-all shadow-inner">
+                            <img src="${fotoMostrar}" class="w-full h-full object-cover">
+                        </div>
+                        <h3 class="font-bold text-slate-800 dark:text-white text-lg drop-shadow-sm truncate">${kid.name} <br> <span class="text-slate-500 dark:text-slate-300 text-sm">${kid.apellidos || ''}</span></h3>
+                        <p class="text-[10px] font-bold text-red-500 dark:text-red-400 uppercase tracking-widest mt-2 mb-3 bg-red-50 dark:bg-red-500/10 inline-block px-2 py-1 rounded-md border border-red-100 dark:border-red-500/20">${kid.pos || 'Jugador'}</p>
+                        <div class="flex justify-center gap-2 text-xs font-bold text-slate-600 dark:text-slate-300">
+                            <span class="bg-slate-100 dark:bg-slate-950/80 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800">${kid.age || '-'}</span>
+                            <span class="bg-slate-100 dark:bg-slate-950/80 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800 flex items-center gap-1"><i data-lucide="weight" class="w-3 h-3 text-slate-400 dark:text-slate-500"></i> ${kid.weight || '-'}</span>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            } else {
+                grid.innerHTML = `<div class="col-span-full text-center bg-white/50 dark:bg-slate-900/40 backdrop-blur-sm p-10 rounded-[2rem] border border-dashed border-slate-300 dark:border-slate-700"><i data-lucide="ghost" class="w-12 h-12 text-slate-400 dark:text-slate-700 mx-auto mb-3"></i><p class="text-slate-500 dark:text-slate-400 font-medium">El equipo está vacío. ¡Agrega a tu primer atleta!</p></div>`;
+            }
+            document.getElementById('athletes-section').style.display = 'block';
+            lucide.createIcons();
+        }
+
+        window.selectCoach = function(coachName) {
+            if (window.selectedCoach === coachName) {
+                window.selectedCoach = null;
+                document.getElementById('athletes-section').style.display = 'none';
+                renderCoaches(); return;
+            }
+            window.selectedCoach = coachName;
+            renderCoaches(); renderAthletesGrid(coachName);
+        }
+
+        /* Funciones Generales UI */
+        window.cerrarVista = (viewToClose) => { document.getElementById(viewToClose).style.display = 'none'; document.getElementById('dashboard-view').style.display = 'block'; }
+        window.abrirInforme = () => { 
+            document.getElementById('ficha-view').style.display = 'none'; 
+            document.getElementById('informe-view').style.display = 'block'; 
+            window.scrollTo(0,0); 
+            window.actualizarGraficos(); // Dibujar las barras al abrir
+        }
+        window.volverAFicha = () => {
+            document.getElementById('informe-view').style.display = 'none'; 
+            document.getElementById('ficha-view').style.display = 'block'; 
+        }
+
+        window.abrirFicha = function(kid) {
+            window.currentKidId = kid.id;
+            document.getElementById('dashboard-view').style.display = 'none';
+            document.getElementById('ficha-view').style.display = 'block';
+            document.getElementById('informe-view').style.display = 'none';
+            window.scrollTo(0,0);
+
+            // Cargar datos en la Ficha Principal
+            document.getElementById('ficha-equipo-nombre').innerText = `Equipo de ${kid.coach}`;
+            document.getElementById('informe-nombre-atleta').innerHTML = `<i data-lucide="user" class="w-4 h-4"></i> ${kid.name || ''} ${kid.apellidos || ''}`;
+            document.getElementById('ficha-numero').value = kid.numero || "10";
+            document.getElementById('ficha-posicion').value = kid.pos || "Jugador";
+
+            const imgEl = document.getElementById('ficha-img');
+            if (!kid.photo || kid.photo.includes('placeholder.com') || kid.photo.includes('ui-avatars.com')) {
+                imgEl.src = window.getAvatarUrl(kid.name, kid.apellidos);
+                document.getElementById('overlay-no-photo').classList.remove('hidden');
+                document.getElementById('overlay-has-photo').classList.add('hidden');
+            } else {
+                imgEl.src = kid.photo;
+                document.getElementById('overlay-no-photo').classList.add('hidden');
+                document.getElementById('overlay-has-photo').classList.remove('hidden');
+            }
+
+            const gen = (label, valor, icon, id, type="text", hint="") => `
+                <div class="flex flex-col bg-white p-3 rounded-2xl border border-slate-200 shadow-sm min-w-0 transition-all focus-within:-translate-y-0.5 focus-within:shadow-md focus-within:border-red-300">
+                    <div class="flex items-center justify-between mb-1">
+                        <div class="flex items-center gap-2 text-red-600"><i data-lucide="${icon}" class="w-4 h-4 shrink-0"></i><span class="text-[10px] font-bold uppercase tracking-wider truncate">${label}</span></div>
+                    </div>
+                    <input type="${type}" id="${id}" value="${valor}" placeholder="${hint}" class="bg-transparent font-bold text-gray-800 outline-none rounded px-1 w-full min-w-0 placeholder:text-slate-300">
+                </div>`;
+
+            document.getElementById('ficha-formularios').innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="md:col-span-2">${gen("Nombre", kid.name || "", "user", "in-nom")}</div>
+                    <div class="md:col-span-2">${gen("Apellidos", kid.apellidos || "", "user", "in-ape")}</div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    ${gen("Fecha Nacimiento", kid.fechaNacimiento || "", "calendar", "in-fec", "date")}
+                    ${gen("Cédula", kid.cedula || "", "id-card", "in-ced")}
+                    ${gen("Edad", kid.age || "", "activity", "in-eda")}
+                    ${gen("Estudio", kid.escuela || "", "school", "in-esc")}
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="bg-red-50/50 p-3 md:p-4 rounded-2xl flex items-center gap-3 border border-red-100 min-w-0">
+                        <div class="bg-red-600 p-2 rounded-xl text-white shadow-sm shrink-0"><i data-lucide="ruler" class="w-5 h-5"></i></div>
+                        <div class="flex flex-col flex-1 min-w-0"><span class="text-[10px] font-bold text-red-500 uppercase tracking-widest">Estatura</span><div class="flex items-center gap-1"><input type="text" id="in-est" value="${(kid.height || '').replace(/metros|m/gi, '').trim()}" class="bg-transparent font-bold text-lg md:text-xl text-slate-800 outline-none w-full min-w-0 px-0" placeholder="0.00"><span class="text-[10px] md:text-xs font-bold text-slate-400 uppercase">m</span></div></div>
+                    </div>
+                    <div class="bg-slate-50 p-3 md:p-4 rounded-2xl flex items-center gap-3 border border-slate-200 min-w-0">
+                        <div class="bg-slate-700 p-2 rounded-xl text-white shadow-sm shrink-0"><i data-lucide="weight" class="w-5 h-5"></i></div>
+                        <div class="flex flex-col flex-1 min-w-0"><span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Peso</span><div class="flex items-center gap-1"><input type="text" id="in-pes" value="${(kid.weight || '').replace(/kg|kilos/gi, '').trim()}" class="bg-transparent font-bold text-lg md:text-xl text-slate-800 outline-none w-full min-w-0 px-0" placeholder="00"><span class="text-[10px] md:text-xs font-bold text-slate-400 uppercase">kg</span></div></div>
+                    </div>
+                </div>
+                <div class="bg-rose-50/50 rounded-2xl p-5 border border-rose-100 mt-2">
+                    <h3 class="flex items-center gap-2 text-rose-600 font-bold mb-4 text-[11px] uppercase tracking-wider"><i data-lucide="stethoscope" class="w-4 h-4"></i> Historial Médico</h3>
+                    <textarea id="in-les" class="w-full bg-white rounded-xl p-3 text-sm font-medium text-slate-700 outline-none focus:ring-2 focus:ring-rose-300 h-16 mb-2 border border-rose-100 shadow-sm" placeholder="Lesiones...">${kid.lesiones || 'Ninguna'}</textarea>
+                    <textarea id="in-ope" class="w-full bg-white rounded-xl p-3 text-sm font-medium text-slate-700 outline-none focus:ring-2 focus:ring-rose-300 h-16 border border-rose-100 shadow-sm" placeholder="Operaciones...">${kid.operaciones || 'Ninguna'}</textarea>
+                </div>
+            `;
+
+            document.getElementById('ficha-trayectoria').innerHTML = `
+                <div class="bg-slate-50 rounded-2xl p-5 shadow-inner border border-slate-200 print:border-none print:shadow-none h-full">
+                    <h3 class="flex items-center gap-2 text-slate-600 font-bold mb-3 text-[11px] uppercase tracking-wider"><i data-lucide="history" class="w-4 h-4 text-slate-400"></i> Trayectoria y Clubes</h3>
+                    <textarea id="in-exp" class="w-full bg-white rounded-xl p-3 text-sm font-medium text-slate-700 outline-none focus:ring-2 focus:ring-red-300 resize-none h-24 border border-slate-200 shadow-sm" placeholder="Equipos anteriores...">${kid.experiencia || ''}</textarea>
+                </div>
+            `;
+
+            // Cargar datos en la vista de Informe Físico
+            document.getElementById('in-vel-ini').value = kid.vel_ini || '';
+            document.getElementById('in-vel-fin').value = kid.vel_fin || '';
+            document.getElementById('in-agi-ini').value = kid.agi_ini || '';
+            document.getElementById('in-agi-fin').value = kid.agi_fin || '';
+            document.getElementById('in-exp-ini').value = kid.exp_ini || '';
+            document.getElementById('in-exp-fin').value = kid.exp_fin || '';
+            document.getElementById('in-reporte-fisico').value = kid.reporte_fisico || '';
+            
+            lucide.createIcons();
+            window.actualizarGraficos(); // Por si abren directo
+        }
+
+        // LÓGICA DE LAS BARRAS ANIMADAS
+        window.actualizarGraficos = function() {
+            const calcularAncho = (idIni, idFin, barIniId, barFinId, valIniId, valFinId, posfix) => {
+                let vIni = parseFloat(document.getElementById(idIni).value) || 0;
+                let vFin = parseFloat(document.getElementById(idFin).value) || 0;
+                let maximo = Math.max(vIni, vFin);
+                if (maximo === 0) maximo = 1; // Prevenir división por cero
+                
+                // Calcula el porcentaje (el más alto siempre llenará la barra)
+                let pctIni = (vIni / maximo) * 100;
+                let pctFin = (vFin / maximo) * 100;
+
+                document.getElementById(barIniId).style.width = pctIni + '%';
+                document.getElementById(barFinId).style.width = pctFin + '%';
+                document.getElementById(valIniId).innerText = vIni + posfix;
+                document.getElementById(valFinId).innerText = vFin + posfix;
+            };
+
+            calcularAncho('in-vel-ini', 'in-vel-fin', 'bar-vel-ini', 'bar-vel-fin', 'val-vel-ini', 'val-vel-fin', 's');
+            calcularAncho('in-agi-ini', 'in-agi-fin', 'bar-agi-ini', 'bar-agi-fin', 'val-agi-ini', 'val-agi-fin', 's');
+            calcularAncho('in-exp-ini', 'in-exp-fin', 'bar-exp-ini', 'bar-exp-fin', 'val-exp-ini', 'val-exp-fin', 'cm');
+        }
+
+        // UNIFICAMOS EL BOTON GUARDAR PARA QUE RESCATE DATOS DE AMBAS VISTAS
+        window.guardarTodo = async function() {
+            if (!window.currentKidId) return;
+            const index = window.athletes.findIndex(a => a.id === window.currentKidId);
+            let atleta = index > -1 ? window.athletes[index] : { id: window.currentKidId, coach: window.selectedCoach };
+            
+            // Datos de la Ficha
+            atleta.name = document.getElementById('in-nom').value;
+            atleta.apellidos = document.getElementById('in-ape').value;
+            atleta.fechaNacimiento = document.getElementById('in-fec').value;
+            atleta.cedula = document.getElementById('in-ced').value;
+            atleta.age = document.getElementById('in-eda').value;
+            atleta.escuela = document.getElementById('in-esc').value;
+            atleta.height = document.getElementById('in-est').value;
+            atleta.weight = document.getElementById('in-pes').value;
+            atleta.lesiones = document.getElementById('in-les').value;
+            atleta.operaciones = document.getElementById('in-ope').value;
+            atleta.experiencia = document.getElementById('in-exp').value;
+            atleta.numero = document.getElementById('ficha-numero').value;
+            atleta.pos = document.getElementById('ficha-posicion').value;
+            
+            // Datos del Informe Físico
+            atleta.vel_ini = document.getElementById('in-vel-ini').value;
+            atleta.vel_fin = document.getElementById('in-vel-fin').value;
+            atleta.agi_ini = document.getElementById('in-agi-ini').value;
+            atleta.agi_fin = document.getElementById('in-agi-fin').value;
+            atleta.exp_ini = document.getElementById('in-exp-ini').value;
+            atleta.exp_fin = document.getElementById('in-exp-fin').value;
+            atleta.reporte_fisico = document.getElementById('in-reporte-fisico').value;
+
+            const fotoActual = document.getElementById('ficha-img').src;
+            if (fotoActual.includes('ui-avatars.com') || fotoActual.includes('placeholder.com')) {
+                atleta.photo = window.getAvatarUrl(atleta.name, atleta.apellidos);
+            } else {
+                atleta.photo = fotoActual;
+            }
+
+            document.getElementById('toast-mensaje').innerText = "Sincronizando...";
+            const toast = document.getElementById('toast-notificacion');
+            toast.className = 'fixed top-5 right-5 text-white px-6 py-3 rounded-xl shadow-lg transform opacity-100 transition-all duration-300 z-[70] flex items-center gap-3 print:hidden bg-blue-500 border border-blue-400 translate-y-0';
+
+            try {
+                await guardarEnNube(atleta);
+                window.mostrarNotificacion("¡Registro y Reporte Guardados!", "green");
+            } catch (e) {
+                console.error(e);
+                window.mostrarNotificacion("Fallo de red al guardar", "red");
+            }
+        }
+
+        async function guardarEnNube(atleta) {
+            if (db && refAtletas) {
+                const docRef = doc(refAtletas, atleta.id.toString());
+                await setDoc(docRef, atleta, { merge: true });
+            } else {
+                throw new Error("No hay conexión con la base de datos");
+            }
+        }
+
+        window.agregarAtleta = function() {
+            if (!window.selectedCoach) return;
+            const nuevoId = Date.now().toString(); 
+            const nuevo = {
+                id: nuevoId,
+                name: "Nuevo", apellidos: "Atleta", coach: window.selectedCoach,
+                age: "", height: "", weight: "", pos: "Jugador", numero: "0",
+                vel_ini: "", vel_fin: "", agi_ini: "", agi_fin: "", exp_ini: "", exp_fin: "", reporte_fisico: "",
+                photo: window.getAvatarUrl("Nuevo", "Atleta"), cedula: "", fechaNacimiento: "", escuela: "",
+                lesiones: "Ninguna", operaciones: "Ninguna", experiencia: ""
+            };
+            
+            guardarEnNube(nuevo).then(() => {
+                window.abrirFicha(nuevo);
+                window.mostrarNotificacion("Atleta creado. ¡Llena sus datos!", "green");
+            }).catch(e => window.mostrarNotificacion("Error al crear atleta", "red"));
+        }
+        
+        // --- UTILIDADES FOTOS Y MODALES (Sin cambios) ---
+        window.subirFoto = (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        const MAX_WIDTH = 500; const MAX_HEIGHT = 500;
+                        let width = img.width; let height = img.height;
+
+                        if (width > height) { if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; } } 
+                        else { if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; } }
+
+                        canvas.width = width; canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        document.getElementById('ficha-img').src = canvas.toDataURL('image/jpeg', 0.7);
+                        document.getElementById('overlay-no-photo').classList.add('hidden');
+                        document.getElementById('overlay-has-photo').classList.remove('hidden');
+                    };
+                    img.src = e.target.result;
+                }; 
+                reader.readAsDataURL(file);
+            }
+        }
+
+        window.eliminarFoto = () => {
+            document.getElementById('ficha-img').src = window.getAvatarUrl(document.getElementById('in-nom').value || 'Atleta', document.getElementById('in-ape').value || '');
+            document.getElementById('overlay-has-photo').classList.add('hidden');
+            document.getElementById('overlay-no-photo').classList.remove('hidden');
+        }
+
+        window.confirmarBorrado = function(id, nombre, event) {
+            event.stopPropagation(); 
+            window.atletaABorrar = id;
+            document.getElementById('texto-borrar').innerText = `¿Estás seguro de que quieres borrar a ${nombre}? Esta acción no se puede deshacer.`;
+            const modal = document.getElementById('modal-borrar');
+            modal.classList.remove('hidden');
+            setTimeout(() => { modal.classList.remove('opacity-0'); document.getElementById('modal-borrar-content').classList.remove('scale-95'); }, 10);
+        }
+
+        window.cancelarBorrado = function() {
+            window.atletaABorrar = null;
+            const modal = document.getElementById('modal-borrar');
+            modal.classList.add('opacity-0'); document.getElementById('modal-borrar-content').classList.add('scale-95');
+            setTimeout(() => { modal.classList.add('hidden'); }, 300); 
+        }
+
+        window.ejecutarBorrado = async function() {
+            if (window.atletaABorrar && db && refAtletas) {
+                try {
+                    await deleteDoc(docRef);
+                    window.cancelarBorrado();
+                    window.mostrarNotificacion("Atleta borrado", "red");
+                } catch (e) { window.mostrarNotificacion("Error al borrar", "red"); }
+            }
+        }
+
+        window.mostrarNotificacion = (msj, color = "green") => {
+            const toast = document.getElementById('toast-notificacion');
+            const icon = document.getElementById('toast-icon');
+            document.getElementById('toast-mensaje').innerText = msj;
+            
+            toast.className = 'fixed top-5 right-5 text-white px-6 py-3 rounded-xl shadow-lg transform transition-all duration-300 z-[70] flex items-center gap-3 print:hidden -translate-y-20 opacity-0';
+
+            if(color === "red") {
+                toast.classList.add('bg-red-500', 'border-red-400', 'shadow-[0_10px_20px_rgba(239,68,68,0.3)]');
+                icon.setAttribute('data-lucide', 'alert-circle');
+            } else {
+                toast.classList.add('bg-emerald-500', 'border-emerald-400', 'shadow-[0_10px_20px_rgba(16,185,129,0.3)]');
+                icon.setAttribute('data-lucide', 'cloud-lightning');
+            }
+            lucide.createIcons();
+
+            setTimeout(() => toast.classList.remove('-translate-y-20', 'opacity-0'), 10);
+            setTimeout(() => toast.classList.add('-translate-y-20', 'opacity-0'), 3000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            iniciarBaseDeDatos();
+            renderCoaches();
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
