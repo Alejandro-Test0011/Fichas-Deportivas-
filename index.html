@@ -71,7 +71,7 @@
         <button id="btn-abrir-login" onclick="window.mostrarModalLogin()" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 dark:bg-slate-900/50 dark:hover:bg-slate-800/80 backdrop-blur-md border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg transition-all">
             <i data-lucide="lock" class="w-4 h-4"></i> Entrar
         </button>
-        <button id="btn-cerrar-sesion" onclick="window.cerrarSesion()" class="hidden flex items-center gap-2 bg-red-500/10 hover:bg-red-500/20 backdrop-blur-md border border-red-500/30 text-red-600 dark:text-red-400 px-4 py-2 rounded-full text-sm font-bold shadow-lg transition-all">
+        <button id="btn-cerrar-sesion" onclick="window.cerrarSesion()" class="hidden items-center gap-2 bg-red-500/10 hover:bg-red-500/20 backdrop-blur-md border border-red-500/30 text-red-600 dark:text-red-400 px-4 py-2 rounded-full text-sm font-bold shadow-lg transition-all">
             <i data-lucide="log-out" class="w-4 h-4"></i> Salir
         </button>
     </div>
@@ -169,11 +169,10 @@
                         <div class="relative aspect-[3/4] bg-slate-200 rounded-3xl overflow-hidden border-4 border-white shadow-xl group">
                             <img id="ficha-img" src="" class="w-full h-full object-cover">
                             
-                            <!-- Controles de foto ocultos si no es admin -->
-                            <div id="overlay-no-photo" class="absolute inset-0 bg-black/40 opacity-0 flex items-center justify-center transition-opacity print:hidden hidden cursor-pointer" onclick="if(window.isAdmin) document.getElementById('file-upload').click()">
+                            <div id="overlay-no-photo" class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity print:hidden hidden cursor-pointer" onclick="if(window.isAdmin) document.getElementById('file-upload').click()">
                                 <p class="text-white font-bold flex items-center gap-2"><i data-lucide="camera" class="w-5 h-5"></i> Subir Foto</p>
                             </div>
-                            <div id="overlay-has-photo" class="absolute inset-0 bg-black/60 opacity-0 flex flex-col items-center justify-center gap-3 transition-opacity print:hidden hidden">
+                            <div id="overlay-has-photo" class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center gap-3 transition-opacity print:hidden hidden">
                                 <button onclick="document.getElementById('file-upload').click()" class="bg-slate-700 hover:bg-slate-800 text-white px-5 py-2 rounded-full font-bold text-sm flex items-center gap-2 transition-transform active:scale-95 border border-slate-500"><i data-lucide="camera" class="w-4 h-4"></i> Reemplazar</button>
                                 <button onclick="window.eliminarFoto()" class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-full font-bold text-sm flex items-center gap-2 transition-transform active:scale-95 border border-red-400"><i data-lucide="trash-2" class="w-4 h-4"></i> Eliminar</button>
                             </div>
@@ -196,11 +195,11 @@
                     </div>
 
                     <div class="order-2 md:col-start-2 md:col-span-2 md:row-start-1 md:row-span-2 space-y-6" id="ficha-formularios">
-                        <!-- Inyectado por JS -->
+                        <!-- Generado por JS -->
                     </div>
 
                     <div class="order-3 md:col-start-1 md:row-start-2 w-full" id="ficha-trayectoria">
-                        <!-- Inyectado por JS -->
+                        <!-- Generado por JS -->
                     </div>
 
                 </div>
@@ -208,7 +207,7 @@
         </div>
     </div>
 
-    <!-- NUEVO: VISTA DE INFORME FÍSICO -->
+    <!-- VISTA DE INFORME FÍSICO -->
     <div id="informe-view" class="bg-slate-100 text-slate-800 p-3 sm:p-4 md:p-8 min-h-screen fade-in relative z-50" style="display: none;">
         
         <div class="max-w-5xl mx-auto mb-6 flex flex-col md:flex-row justify-between gap-4 print:hidden">
@@ -364,7 +363,7 @@
         <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 max-w-sm w-full mx-4 transform scale-95 transition-transform" id="modal-borrar-content">
             <div class="w-20 h-20 bg-red-50 dark:bg-red-500/10 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6"><i data-lucide="alert-triangle" class="w-10 h-10"></i></div>
             <h3 class="text-2xl font-black text-center text-slate-800 dark:text-white mb-2">¿Borrar Atleta?</h3>
-            <p class="text-center text-slate-500 dark:text-slate-400 mb-8 font-medium leading-relaxed">¿Estás seguro de que quieres borrar a este atleta?</p>
+            <p class="text-center text-slate-500 dark:text-slate-400 mb-8 font-medium leading-relaxed" id="texto-borrar">¿Estás seguro de que quieres borrar a este atleta?</p>
             <div class="flex gap-3">
                 <button onclick="window.cancelarBorrado()" class="flex-1 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold py-3 rounded-xl transition-colors">Cancelar</button>
                 <button onclick="window.ejecutarBorrado()" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-xl transition-colors shadow-lg shadow-red-500/30">Sí, borrar</button>
@@ -400,7 +399,7 @@
         window.selectedCoach = null;
         window.currentKidId = null;
         window.atletaABorrar = null; 
-        window.isAdmin = false; // MAGIA: Variable que define si puedes editar o solo mirar
+        window.isAdmin = false;
         
         window.getAvatarUrl = function(nombre, apellidos) {
             const n = nombre || 'A';
@@ -415,12 +414,10 @@
         ];
 
         async function iniciarBaseDeDatos() {
-            // Iniciar como turista primero
             try { await signInAnonymously(auth); } catch (e) { console.error(e); }
             
             onAuthStateChanged(auth, (user) => {
                 if (user) {
-                    // Si el usuario NO es anónimo, es el Admin (Login con correo y clave)
                     window.isAdmin = !user.isAnonymous;
                     actualizarUI_Login();
 
@@ -431,13 +428,11 @@
                         if (window.selectedCoach) { renderCoaches(); renderAthletesGrid(window.selectedCoach); }
                     });
                 } else {
-                    // Si cierran sesión del admin, reconectar como turista
                     signInAnonymously(auth);
                 }
             });
         }
 
-        // --- SISTEMA DE LOGIN DE ENTRENADOR ---
         function actualizarUI_Login() {
             const btnAbrirLogin = document.getElementById('btn-abrir-login');
             const btnCerrarSesion = document.getElementById('btn-cerrar-sesion');
@@ -446,24 +441,19 @@
             const btnGuardarInforme = document.getElementById('btn-guardar-informe');
 
             if (window.isAdmin) {
-                // Modo Dios
-                btnAbrirLogin.classList.add('hidden');
-                btnCerrarSesion.classList.remove('hidden');
-                btnCerrarSesion.classList.add('flex');
-                if (btnNuevoAtleta) { btnNuevoAtleta.classList.remove('hidden'); btnNuevoAtleta.classList.add('flex'); }
-                if (btnGuardarFicha) { btnGuardarFicha.classList.remove('hidden'); btnGuardarFicha.classList.add('flex'); }
-                if (btnGuardarInforme) { btnGuardarInforme.classList.remove('hidden'); btnGuardarInforme.classList.add('flex'); }
+                if(btnAbrirLogin) btnAbrirLogin.classList.add('hidden');
+                if(btnCerrarSesion) { btnCerrarSesion.classList.remove('hidden'); btnCerrarSesion.classList.add('flex'); }
+                if(btnNuevoAtleta) { btnNuevoAtleta.classList.remove('hidden'); btnNuevoAtleta.classList.add('flex'); }
+                if(btnGuardarFicha) { btnGuardarFicha.classList.remove('hidden'); btnGuardarFicha.classList.add('flex'); }
+                if(btnGuardarInforme) { btnGuardarInforme.classList.remove('hidden'); btnGuardarInforme.classList.add('flex'); }
             } else {
-                // Modo Turista
-                btnAbrirLogin.classList.remove('hidden');
-                btnAbrirLogin.classList.add('flex');
-                btnCerrarSesion.classList.add('hidden');
-                if (btnNuevoAtleta) btnNuevoAtleta.classList.add('hidden');
-                if (btnGuardarFicha) btnGuardarFicha.classList.add('hidden');
-                if (btnGuardarInforme) btnGuardarInforme.classList.add('hidden');
+                if(btnAbrirLogin) { btnAbrirLogin.classList.remove('hidden'); btnAbrirLogin.classList.add('flex'); }
+                if(btnCerrarSesion) btnCerrarSesion.classList.add('hidden');
+                if(btnNuevoAtleta) btnNuevoAtleta.classList.add('hidden');
+                if(btnGuardarFicha) btnGuardarFicha.classList.add('hidden');
+                if(btnGuardarInforme) btnGuardarInforme.classList.add('hidden');
             }
             
-            // Re-renderizamos para esconder botones de basura o bloquear inputs si está viendo fichas
             if (window.selectedCoach) renderAthletesGrid(window.selectedCoach);
             if (window.currentKidId) window.abrirFicha(window.athletes.find(a=>a.id===window.currentKidId));
         }
@@ -508,7 +498,6 @@
             window.mostrarNotificacion("Sesión cerrada. Modo lectura activado.", "indigo");
         }
 
-        // RENDERIZADOS
         function renderCoaches() {
             const container = document.getElementById('coaches-container');
             container.innerHTML = '';
@@ -543,8 +532,9 @@
                     const esFotoGenerica = !kid.photo || kid.photo.includes('placeholder.com') || kid.photo.includes('ui-avatars.com');
                     const fotoMostrar = esFotoGenerica ? window.getAvatarUrl(kid.name, kid.apellidos) : kid.photo;
 
-                    // Si NO es admin, no pinta el botón de basura
-                    const btnBorrar = window.isAdmin ? `<button onclick="window.confirmarBorrado('${kid.id}', '${kid.name}', event)" class="absolute top-3 right-3 bg-slate-100 dark:bg-slate-800 hover:bg-red-100 dark:hover:bg-red-500/20 text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 p-2 rounded-full transition-colors z-10 print:hidden border border-slate-200 dark:border-slate-700 hover:border-red-200 dark:hover:border-red-500/30"><i data-lucide="trash-2" class="w-4 h-4"></i></button>` : '';
+                    // Limpieza segura del nombre para evitar errores si contiene comillas
+                    const safeName = (kid.name || '').replace(/'/g, "\\'");
+                    const btnBorrar = window.isAdmin ? `<button onclick="window.confirmarBorrado('${kid.id}', '${safeName}', event)" class="absolute top-3 right-3 bg-slate-100 dark:bg-slate-800 hover:bg-red-100 dark:hover:bg-red-500/20 text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 p-2 rounded-full transition-colors z-10 print:hidden border border-slate-200 dark:border-slate-700 hover:border-red-200 dark:hover:border-red-500/30"><i data-lucide="trash-2" class="w-4 h-4"></i></button>` : '';
 
                     card.innerHTML = `
                         ${btnBorrar}
@@ -590,7 +580,6 @@
             document.getElementById('informe-view').style.display = 'none';
             window.scrollTo(0,0);
 
-            // Determinar si los campos son editables
             const readOnlyAttr = window.isAdmin ? '' : 'readonly';
             const focusClass = window.isAdmin ? 'focus-within:-translate-y-0.5 focus-within:shadow-md focus-within:border-red-300' : '';
 
@@ -611,15 +600,12 @@
             if (!esFotoGenerica) {
                 imgEl.src = kid.photo;
                 overlayNoPhoto.classList.add('hidden');
-                // Mostrar overlay de reemplazar/borrar SOLO si es admin
                 if(window.isAdmin) overlayHasPhoto.classList.remove('hidden');
                 else overlayHasPhoto.classList.add('hidden');
             } else {
                 imgEl.src = window.getAvatarUrl(kid.name, kid.apellidos);
-                // Mostrar texto de "Subir foto" SOLO si es admin
                 if(window.isAdmin) overlayNoPhoto.classList.remove('hidden');
                 else overlayNoPhoto.classList.add('hidden');
-                
                 overlayHasPhoto.classList.add('hidden');
             }
 
@@ -666,7 +652,6 @@
                 </div>
             `;
 
-            // Cargar datos Informe Físico y bloquearlos
             const idsInforme = ['in-vel-ini', 'in-vel-fin', 'in-agi-ini', 'in-agi-fin', 'in-exp-ini', 'in-exp-fin', 'in-reporte-fisico'];
             document.getElementById('in-vel-ini').value = kid.vel_ini || '';
             document.getElementById('in-vel-fin').value = kid.vel_fin || '';
@@ -812,21 +797,36 @@
             document.getElementById('overlay-no-photo').classList.remove('hidden');
         }
 
-        window.confirmarBorrado = function(id, nombre, event) {
-            event.stopPropagation(); 
+        window.confirmarBorrado = function(id, nombre, ev) {
+            const e = ev || window.event;
+            if (e) { e.preventDefault(); e.stopPropagation(); }
+            
             if(!window.isAdmin) return;
             window.atletaABorrar = id;
-            document.getElementById('texto-borrar').innerText = `¿Estás seguro de que quieres borrar a ${nombre}? Esta acción no se puede deshacer.`;
+            
+            const textoEl = document.getElementById('texto-borrar');
+            if (textoEl) textoEl.innerText = `¿Estás seguro de que quieres borrar a ${nombre}? Esta acción no se puede deshacer.`;
+            
             const modal = document.getElementById('modal-borrar');
-            modal.classList.remove('hidden');
-            setTimeout(() => { modal.classList.remove('opacity-0'); document.getElementById('modal-borrar-content').classList.remove('scale-95'); }, 10);
+            if (modal) {
+                modal.classList.remove('hidden');
+                setTimeout(() => { 
+                    modal.classList.remove('opacity-0'); 
+                    const content = document.getElementById('modal-borrar-content');
+                    if (content) content.classList.remove('scale-95'); 
+                }, 10);
+            }
         }
 
         window.cancelarBorrado = function() {
             window.atletaABorrar = null;
             const modal = document.getElementById('modal-borrar');
-            modal.classList.add('opacity-0'); document.getElementById('modal-borrar-content').classList.add('scale-95');
-            setTimeout(() => { modal.classList.add('hidden'); }, 300); 
+            if(modal) {
+                modal.classList.add('opacity-0'); 
+                const content = document.getElementById('modal-borrar-content');
+                if(content) content.classList.add('scale-95');
+                setTimeout(() => { modal.classList.add('hidden'); }, 300); 
+            }
         }
 
         window.ejecutarBorrado = async function() {
@@ -835,13 +835,18 @@
                     await deleteDoc(doc(refAtletas, window.atletaABorrar.toString()));
                     window.cancelarBorrado();
                     window.mostrarNotificacion("Atleta borrado", "red");
-                } catch (e) { window.mostrarNotificacion("Error al borrar", "red"); }
+                } catch (e) { 
+                    console.error("Error al borrar:", e);
+                    window.mostrarNotificacion("Error al borrar", "red"); 
+                }
             }
         }
 
         window.mostrarNotificacion = (msj, color = "green") => {
             const toast = document.getElementById('toast-notificacion');
             const icon = document.getElementById('toast-icon');
+            if(!toast || !icon) return;
+            
             document.getElementById('toast-mensaje').innerText = msj;
             
             toast.className = 'fixed top-5 right-5 text-white px-6 py-3 rounded-xl shadow-lg transform transition-all duration-300 z-[70] flex items-center gap-3 print:hidden -translate-y-20 opacity-0';
