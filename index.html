@@ -29,6 +29,12 @@
         .animate-float-delayed { animation: float 18s ease-in-out infinite; animation-delay: -5s; }
         .animate-float-fast { animation: float 12s ease-in-out infinite; animation-delay: -2s; }
 
+        /* Estilos para inputs de solo lectura */
+        input:read-only, textarea:read-only {
+            cursor: default;
+            color: inherit;
+        }
+
         @media print {
             body { background: white !important; padding: 0 !important; color: black !important; }
             .print\:hidden { display: none !important; }
@@ -60,9 +66,19 @@
         </div>
     </div>
 
+    <!-- BOTÓN DE LOGIN / LOGOUT EN LA ESQUINA -->
+    <div class="absolute top-4 right-4 md:top-8 md:right-8 z-[55] print:hidden">
+        <button id="btn-abrir-login" onclick="window.mostrarModalLogin()" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 dark:bg-slate-900/50 dark:hover:bg-slate-800/80 backdrop-blur-md border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg transition-all">
+            <i data-lucide="lock" class="w-4 h-4"></i> Entrar
+        </button>
+        <button id="btn-cerrar-sesion" onclick="window.cerrarSesion()" class="hidden flex items-center gap-2 bg-red-500/10 hover:bg-red-500/20 backdrop-blur-md border border-red-500/30 text-red-600 dark:text-red-400 px-4 py-2 rounded-full text-sm font-bold shadow-lg transition-all">
+            <i data-lucide="log-out" class="w-4 h-4"></i> Salir
+        </button>
+    </div>
+
     <!-- PANEL PRINCIPAL (DASHBOARD) -->
     <div id="dashboard-view" class="p-6 md:p-12 pb-24 max-w-5xl mx-auto fade-in">
-        <div class="text-center mb-12 relative">
+        <div class="text-center mb-12 relative pt-8 md:pt-0">
             <div class="inline-flex items-center justify-center w-28 h-28 mb-4 relative z-10">
                 <div class="absolute inset-0 bg-white/20 dark:bg-white/5 rounded-full blur-xl"></div>
                 <img src="logo.png" alt="Logo Principal Corazón del Táchira" class="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(220,38,38,0.2)] relative z-10" onerror="this.src='https://ui-avatars.com/api/?name=C+T&background=b91c1c&color=fff&size=150'">
@@ -95,7 +111,7 @@
                     <span id="athletes-count" class="bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-4 py-2 sm:py-2.5 rounded-xl text-sm font-bold text-center flex-shrink-0 border border-slate-200 dark:border-slate-700 shadow-sm dark:shadow-inner">
                         0
                     </span>
-                    <button onclick="window.agregarAtleta()" class="flex-1 sm:flex-none justify-center bg-gradient-to-r from-red-500 to-red-700 dark:from-red-600 dark:to-red-800 hover:from-red-600 hover:to-red-800 dark:hover:from-red-500 dark:hover:to-red-700 text-white px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all active:scale-95 shadow-[0_5px_15px_rgba(220,38,38,0.2)] dark:shadow-[0_0_20px_rgba(220,38,38,0.3)] border border-red-400 dark:border-red-500/50">
+                    <button id="btn-nuevo-atleta" onclick="window.agregarAtleta()" class="hidden flex-1 sm:flex-none justify-center bg-gradient-to-r from-red-500 to-red-700 dark:from-red-600 dark:to-red-800 hover:from-red-600 hover:to-red-800 dark:hover:from-red-500 dark:hover:to-red-700 text-white px-5 py-2.5 rounded-xl text-sm font-bold items-center gap-2 transition-all active:scale-95 shadow-[0_5px_15px_rgba(220,38,38,0.2)] dark:shadow-[0_0_20px_rgba(220,38,38,0.3)] border border-red-400 dark:border-red-500/50">
                         <i data-lucide="user-plus" class="w-4 h-4"></i> Nuevo Atleta
                     </button>
                 </div>
@@ -116,8 +132,8 @@
                 <button onclick="window.abrirInforme()" class="flex-1 md:flex-none flex justify-center items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-4 md:px-6 py-3 md:py-2 rounded-full font-bold shadow-lg shadow-indigo-600/30 transition-transform active:scale-95 border border-indigo-500">
                     <i data-lucide="activity" class="w-5 h-5"></i> Informe<span class="hidden sm:inline"> Físico</span>
                 </button>
-                <button onclick="window.guardarTodo()" class="flex-1 md:flex-none flex justify-center items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-4 md:px-6 py-3 md:py-2 rounded-full font-bold shadow-lg shadow-emerald-500/30 transition-transform active:scale-95 border border-emerald-400">
-                    <i data-lucide="save" class="w-5 h-5"></i> Guardar<span class="hidden sm:inline"> Nube</span>
+                <button id="btn-guardar-ficha" onclick="window.guardarTodo()" class="hidden flex-1 md:flex-none justify-center items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-4 md:px-6 py-3 md:py-2 rounded-full font-bold shadow-lg shadow-emerald-500/30 transition-transform active:scale-95 border border-emerald-400">
+                    <i data-lucide="save" class="w-5 h-5"></i> Guardar
                 </button>
                 <button onclick="window.print()" class="flex-1 md:flex-none flex justify-center items-center gap-2 bg-red-600 hover:bg-red-500 text-white px-4 md:px-6 py-3 md:py-2 rounded-full font-bold shadow-lg shadow-red-600/30 transition-transform active:scale-95 border border-red-500">
                     <i data-lucide="printer" class="w-5 h-5"></i> Imprimir
@@ -141,7 +157,7 @@
                 <div class="flex items-center gap-3 md:gap-6 z-10 relative">
                     <div class="hidden md:block opacity-40 transform -translate-y-2 text-yellow-400 drop-shadow-xl print:text-slate-200"><i data-lucide="trophy" style="width: 75px; height: 75px;"></i></div>
                     <div class="w-16 h-16 md:w-20 md:h-20 bg-white p-1 md:p-1.5 rounded-2xl shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-300 ring-4 ring-white/10 print:ring-0 print:shadow-none">
-                        <img src="escudo.png" alt="Escudo Ficha Corazón del Táchira" class="w-full h-full object-contain rounded-xl" onerror="this.src='escudo.jpg'">
+                        <img src="escudo.png" alt="Escudo Ficha" class="w-full h-full object-contain rounded-xl" onerror="this.src='escudo.jpg'">
                     </div>
                 </div>
             </div>
@@ -152,10 +168,12 @@
                     <div class="order-1 md:col-start-1 md:row-start-1 flex flex-col gap-6">
                         <div class="relative aspect-[3/4] bg-slate-200 rounded-3xl overflow-hidden border-4 border-white shadow-xl group">
                             <img id="ficha-img" src="" class="w-full h-full object-cover">
-                            <div id="overlay-no-photo" class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity cursor-pointer print:hidden hidden" onclick="document.getElementById('file-upload').click()">
+                            
+                            <!-- Controles de foto ocultos si no es admin -->
+                            <div id="overlay-no-photo" class="absolute inset-0 bg-black/40 opacity-0 flex items-center justify-center transition-opacity print:hidden hidden cursor-pointer" onclick="if(window.isAdmin) document.getElementById('file-upload').click()">
                                 <p class="text-white font-bold flex items-center gap-2"><i data-lucide="camera" class="w-5 h-5"></i> Subir Foto</p>
                             </div>
-                            <div id="overlay-has-photo" class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center gap-3 transition-opacity print:hidden hidden">
+                            <div id="overlay-has-photo" class="absolute inset-0 bg-black/60 opacity-0 flex flex-col items-center justify-center gap-3 transition-opacity print:hidden hidden">
                                 <button onclick="document.getElementById('file-upload').click()" class="bg-slate-700 hover:bg-slate-800 text-white px-5 py-2 rounded-full font-bold text-sm flex items-center gap-2 transition-transform active:scale-95 border border-slate-500"><i data-lucide="camera" class="w-4 h-4"></i> Reemplazar</button>
                                 <button onclick="window.eliminarFoto()" class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-full font-bold text-sm flex items-center gap-2 transition-transform active:scale-95 border border-red-400"><i data-lucide="trash-2" class="w-4 h-4"></i> Eliminar</button>
                             </div>
@@ -178,11 +196,11 @@
                     </div>
 
                     <div class="order-2 md:col-start-2 md:col-span-2 md:row-start-1 md:row-span-2 space-y-6" id="ficha-formularios">
-                        <!-- Generado dinamicamente -->
+                        <!-- Inyectado por JS -->
                     </div>
 
                     <div class="order-3 md:col-start-1 md:row-start-2 w-full" id="ficha-trayectoria">
-                        <!-- Generado dinamicamente -->
+                        <!-- Inyectado por JS -->
                     </div>
 
                 </div>
@@ -198,7 +216,7 @@
                 <i data-lucide="chevron-left" class="w-5 h-5"></i> Regresar a Ficha
             </button>
             <div class="flex flex-row gap-2 md:gap-3 w-full md:w-auto">
-                <button onclick="window.guardarTodo()" class="flex-1 md:flex-none flex justify-center items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-4 md:px-6 py-3 md:py-2 rounded-full font-bold shadow-lg shadow-emerald-500/30 transition-transform active:scale-95 border border-emerald-400">
+                <button id="btn-guardar-informe" onclick="window.guardarTodo()" class="hidden flex-1 md:flex-none justify-center items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-4 md:px-6 py-3 md:py-2 rounded-full font-bold shadow-lg shadow-emerald-500/30 transition-transform active:scale-95 border border-emerald-400">
                     <i data-lucide="save" class="w-5 h-5"></i> Guardar Todo
                 </button>
                 <button onclick="window.print()" class="flex-1 md:flex-none flex justify-center items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-4 md:px-6 py-3 md:py-2 rounded-full font-bold shadow-lg shadow-indigo-600/30 transition-transform active:scale-95 border border-indigo-500">
@@ -209,7 +227,6 @@
 
         <div class="max-w-5xl mx-auto bg-white rounded-[2rem] shadow-2xl overflow-hidden border-8 border-white relative print:shadow-none print:border-none">
             
-            <!-- Cabecera del Informe -->
             <div class="pt-8 pb-16 bg-gradient-to-br from-indigo-700 via-indigo-900 to-slate-900 flex items-center justify-between px-6 md:px-10 text-white relative overflow-hidden">
                 <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay print:hidden"></div>
                 <div class="flex-1 z-10 relative">
@@ -219,156 +236,138 @@
                     <h1 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter drop-shadow-lg text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-300 print:text-black print:bg-none">
                         Informe Físico
                     </h1>
-                    <p id="informe-nombre-atleta" class="text-indigo-200 font-bold tracking-widest uppercase text-sm mt-2 drop-shadow-sm flex items-center gap-2 print:text-slate-600">
-                        <i data-lucide="user" class="w-4 h-4"></i> <span></span>
-                    </p>
+                    <p id="informe-nombre-atleta" class="text-indigo-200 font-bold tracking-widest uppercase text-sm mt-2 drop-shadow-sm flex items-center gap-2 print:text-slate-600"></p>
                 </div>
                 <div class="hidden md:block opacity-40 transform -translate-y-2 text-cyan-400 drop-shadow-xl print:text-slate-200 z-10">
                     <i data-lucide="activity" style="width: 80px; height: 80px;"></i>
                 </div>
             </div>
 
-            <!-- Cuerpo del Informe -->
             <div class="p-6 md:p-10 -mt-10 bg-white rounded-t-[3rem] relative z-10 shadow-[0_-10px_40px_rgba(0,0,0,0.15)] print:shadow-none text-slate-800">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
                     
-                    <!-- Lado Izquierdo: Inputs de Datos -->
                     <div class="flex flex-col gap-6">
                         <h3 class="text-lg font-black text-slate-800 uppercase tracking-tight border-b-2 border-indigo-100 pb-2 mb-2 flex items-center gap-2"><i data-lucide="clipboard-list" class="w-5 h-5 text-indigo-500"></i> Carga de Datos</h3>
                         
-                        <!-- Bloque de Velocidad -->
                         <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
                             <div class="flex items-center gap-2 mb-3 text-indigo-600 font-bold uppercase text-xs tracking-wider"><i data-lucide="timer" class="w-4 h-4"></i> Velocidad (Segundos)</div>
                             <div class="flex gap-4">
                                 <div class="flex-1">
                                     <label class="text-[10px] text-slate-500 font-bold uppercase mb-1 block">Inicio Temp.</label>
-                                    <input type="number" id="in-vel-ini" oninput="window.actualizarGraficos()" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 font-bold text-center outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400" placeholder="0.0">
+                                    <input type="number" id="in-vel-ini" oninput="window.actualizarGraficos()" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 font-bold text-center outline-none focus:ring-2 focus:ring-indigo-400" placeholder="0.0">
                                 </div>
                                 <div class="flex-1">
                                     <label class="text-[10px] text-indigo-500 font-bold uppercase mb-1 block">Actual/Final</label>
-                                    <input type="number" id="in-vel-fin" oninput="window.actualizarGraficos()" class="w-full bg-white border border-indigo-200 shadow-sm rounded-xl p-2.5 font-bold text-indigo-700 text-center outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400" placeholder="0.0">
+                                    <input type="number" id="in-vel-fin" oninput="window.actualizarGraficos()" class="w-full bg-white border border-indigo-200 shadow-sm rounded-xl p-2.5 font-bold text-indigo-700 text-center outline-none focus:ring-2 focus:ring-indigo-400" placeholder="0.0">
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Bloque de Agilidad -->
                         <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
                             <div class="flex items-center gap-2 mb-3 text-emerald-600 font-bold uppercase text-xs tracking-wider"><i data-lucide="zap" class="w-4 h-4"></i> Agilidad (Segundos)</div>
                             <div class="flex gap-4">
                                 <div class="flex-1">
                                     <label class="text-[10px] text-slate-500 font-bold uppercase mb-1 block">Inicio Temp.</label>
-                                    <input type="number" id="in-agi-ini" oninput="window.actualizarGraficos()" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 font-bold text-center outline-none focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400" placeholder="0.0">
+                                    <input type="number" id="in-agi-ini" oninput="window.actualizarGraficos()" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 font-bold text-center outline-none focus:ring-2 focus:ring-emerald-400" placeholder="0.0">
                                 </div>
                                 <div class="flex-1">
                                     <label class="text-[10px] text-emerald-600 font-bold uppercase mb-1 block">Actual/Final</label>
-                                    <input type="number" id="in-agi-fin" oninput="window.actualizarGraficos()" class="w-full bg-white border border-emerald-200 shadow-sm rounded-xl p-2.5 font-bold text-emerald-700 text-center outline-none focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400" placeholder="0.0">
+                                    <input type="number" id="in-agi-fin" oninput="window.actualizarGraficos()" class="w-full bg-white border border-emerald-200 shadow-sm rounded-xl p-2.5 font-bold text-emerald-700 text-center outline-none focus:ring-2 focus:ring-emerald-400" placeholder="0.0">
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Bloque de Explosividad -->
                         <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
                             <div class="flex items-center gap-2 mb-3 text-rose-600 font-bold uppercase text-xs tracking-wider"><i data-lucide="flame" class="w-4 h-4"></i> Explosividad (cm / salto)</div>
                             <div class="flex gap-4">
                                 <div class="flex-1">
                                     <label class="text-[10px] text-slate-500 font-bold uppercase mb-1 block">Inicio Temp.</label>
-                                    <input type="number" id="in-exp-ini" oninput="window.actualizarGraficos()" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 font-bold text-center outline-none focus:ring-2 focus:ring-rose-400 focus:border-rose-400" placeholder="0">
+                                    <input type="number" id="in-exp-ini" oninput="window.actualizarGraficos()" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 font-bold text-center outline-none focus:ring-2 focus:ring-rose-400" placeholder="0">
                                 </div>
                                 <div class="flex-1">
                                     <label class="text-[10px] text-rose-600 font-bold uppercase mb-1 block">Actual/Final</label>
-                                    <input type="number" id="in-exp-fin" oninput="window.actualizarGraficos()" class="w-full bg-white border border-rose-200 shadow-sm rounded-xl p-2.5 font-bold text-rose-700 text-center outline-none focus:ring-2 focus:ring-rose-400 focus:border-rose-400" placeholder="0">
+                                    <input type="number" id="in-exp-fin" oninput="window.actualizarGraficos()" class="w-full bg-white border border-rose-200 shadow-sm rounded-xl p-2.5 font-bold text-rose-700 text-center outline-none focus:ring-2 focus:ring-rose-400" placeholder="0">
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Lado Derecho: Gráficas y Resumen -->
                     <div class="flex flex-col gap-6">
                         <h3 class="text-lg font-black text-slate-800 uppercase tracking-tight border-b-2 border-indigo-100 pb-2 mb-2 flex items-center gap-2"><i data-lucide="bar-chart" class="w-5 h-5 text-indigo-500"></i> Análisis Visual</h3>
                         
-                        <!-- Contenedor de las barras -->
                         <div class="bg-white border border-slate-200 rounded-3xl p-5 md:p-6 shadow-sm space-y-6">
-                            
-                            <!-- Gráfica Velocidad -->
                             <div>
                                 <div class="flex justify-between text-xs font-bold text-slate-500 mb-2 uppercase"><span>Velocidad</span> <span class="text-indigo-600">Comparativa</span></div>
                                 <div class="space-y-2">
-                                    <div class="flex items-center gap-3">
-                                        <span class="text-[10px] font-bold text-slate-400 w-8 text-right">INICIO</span>
-                                        <div class="flex-1 bg-slate-100 rounded-full h-3.5 overflow-hidden"><div id="bar-vel-ini" class="bg-slate-400 h-full rounded-full transition-all duration-700 w-0"></div></div>
-                                        <span class="text-xs font-bold text-slate-600 w-10" id="val-vel-ini">0s</span>
-                                    </div>
-                                    <div class="flex items-center gap-3">
-                                        <span class="text-[10px] font-bold text-indigo-500 w-8 text-right">ACTUAL</span>
-                                        <div class="flex-1 bg-slate-100 rounded-full h-3.5 overflow-hidden"><div id="bar-vel-fin" class="bg-indigo-500 h-full rounded-full transition-all duration-700 w-0 shadow-[0_0_10px_rgba(99,102,241,0.5)]"></div></div>
-                                        <span class="text-xs font-black text-indigo-600 w-10" id="val-vel-fin">0s</span>
-                                    </div>
+                                    <div class="flex items-center gap-3"><span class="text-[10px] font-bold text-slate-400 w-8 text-right">INICIO</span><div class="flex-1 bg-slate-100 rounded-full h-3.5 overflow-hidden"><div id="bar-vel-ini" class="bg-slate-400 h-full rounded-full transition-all duration-700 w-0"></div></div><span class="text-xs font-bold text-slate-600 w-10" id="val-vel-ini">0s</span></div>
+                                    <div class="flex items-center gap-3"><span class="text-[10px] font-bold text-indigo-500 w-8 text-right">ACTUAL</span><div class="flex-1 bg-slate-100 rounded-full h-3.5 overflow-hidden"><div id="bar-vel-fin" class="bg-indigo-500 h-full rounded-full transition-all duration-700 w-0 shadow-[0_0_10px_rgba(99,102,241,0.5)]"></div></div><span class="text-xs font-black text-indigo-600 w-10" id="val-vel-fin">0s</span></div>
                                 </div>
                             </div>
-
                             <hr class="border-slate-100">
-
-                            <!-- Gráfica Agilidad -->
                             <div>
                                 <div class="flex justify-between text-xs font-bold text-slate-500 mb-2 uppercase"><span>Agilidad</span> <span class="text-emerald-600">Comparativa</span></div>
                                 <div class="space-y-2">
-                                    <div class="flex items-center gap-3">
-                                        <span class="text-[10px] font-bold text-slate-400 w-8 text-right">INICIO</span>
-                                        <div class="flex-1 bg-slate-100 rounded-full h-3.5 overflow-hidden"><div id="bar-agi-ini" class="bg-slate-400 h-full rounded-full transition-all duration-700 w-0"></div></div>
-                                        <span class="text-xs font-bold text-slate-600 w-10" id="val-agi-ini">0s</span>
-                                    </div>
-                                    <div class="flex items-center gap-3">
-                                        <span class="text-[10px] font-bold text-emerald-600 w-8 text-right">ACTUAL</span>
-                                        <div class="flex-1 bg-slate-100 rounded-full h-3.5 overflow-hidden"><div id="bar-agi-fin" class="bg-emerald-500 h-full rounded-full transition-all duration-700 w-0 shadow-[0_0_10px_rgba(16,185,129,0.5)]"></div></div>
-                                        <span class="text-xs font-black text-emerald-600 w-10" id="val-agi-fin">0s</span>
-                                    </div>
+                                    <div class="flex items-center gap-3"><span class="text-[10px] font-bold text-slate-400 w-8 text-right">INICIO</span><div class="flex-1 bg-slate-100 rounded-full h-3.5 overflow-hidden"><div id="bar-agi-ini" class="bg-slate-400 h-full rounded-full transition-all duration-700 w-0"></div></div><span class="text-xs font-bold text-slate-600 w-10" id="val-agi-ini">0s</span></div>
+                                    <div class="flex items-center gap-3"><span class="text-[10px] font-bold text-emerald-600 w-8 text-right">ACTUAL</span><div class="flex-1 bg-slate-100 rounded-full h-3.5 overflow-hidden"><div id="bar-agi-fin" class="bg-emerald-500 h-full rounded-full transition-all duration-700 w-0 shadow-[0_0_10px_rgba(16,185,129,0.5)]"></div></div><span class="text-xs font-black text-emerald-600 w-10" id="val-agi-fin">0s</span></div>
                                 </div>
                             </div>
-
                             <hr class="border-slate-100">
-
-                            <!-- Gráfica Explosividad -->
                             <div>
                                 <div class="flex justify-between text-xs font-bold text-slate-500 mb-2 uppercase"><span>Explosividad</span> <span class="text-rose-600">Comparativa</span></div>
                                 <div class="space-y-2">
-                                    <div class="flex items-center gap-3">
-                                        <span class="text-[10px] font-bold text-slate-400 w-8 text-right">INICIO</span>
-                                        <div class="flex-1 bg-slate-100 rounded-full h-3.5 overflow-hidden"><div id="bar-exp-ini" class="bg-slate-400 h-full rounded-full transition-all duration-700 w-0"></div></div>
-                                        <span class="text-xs font-bold text-slate-600 w-10" id="val-exp-ini">0cm</span>
-                                    </div>
-                                    <div class="flex items-center gap-3">
-                                        <span class="text-[10px] font-bold text-rose-600 w-8 text-right">ACTUAL</span>
-                                        <div class="flex-1 bg-slate-100 rounded-full h-3.5 overflow-hidden"><div id="bar-exp-fin" class="bg-rose-500 h-full rounded-full transition-all duration-700 w-0 shadow-[0_0_10px_rgba(244,63,94,0.5)]"></div></div>
-                                        <span class="text-xs font-black text-rose-600 w-10" id="val-exp-fin">0cm</span>
-                                    </div>
+                                    <div class="flex items-center gap-3"><span class="text-[10px] font-bold text-slate-400 w-8 text-right">INICIO</span><div class="flex-1 bg-slate-100 rounded-full h-3.5 overflow-hidden"><div id="bar-exp-ini" class="bg-slate-400 h-full rounded-full transition-all duration-700 w-0"></div></div><span class="text-xs font-bold text-slate-600 w-10" id="val-exp-ini">0cm</span></div>
+                                    <div class="flex items-center gap-3"><span class="text-[10px] font-bold text-rose-600 w-8 text-right">ACTUAL</span><div class="flex-1 bg-slate-100 rounded-full h-3.5 overflow-hidden"><div id="bar-exp-fin" class="bg-rose-500 h-full rounded-full transition-all duration-700 w-0 shadow-[0_0_10px_rgba(244,63,94,0.5)]"></div></div><span class="text-xs font-black text-rose-600 w-10" id="val-exp-fin">0cm</span></div>
                                 </div>
                             </div>
-
                         </div>
 
-                        <!-- Evaluación Cualitativa del Coach -->
                         <div class="bg-slate-800 rounded-3xl p-5 shadow-lg border border-slate-700 print:bg-slate-50 print:border-slate-200">
-                            <h3 class="flex items-center gap-2 text-white font-bold mb-3 text-xs uppercase tracking-wider print:text-slate-800">
-                                <i data-lucide="message-square" class="w-4 h-4 text-indigo-400 print:text-indigo-600"></i> Reporte del Entrenador
-                            </h3>
-                            <textarea id="in-reporte-fisico" class="w-full bg-slate-900/50 rounded-xl p-4 text-sm font-medium text-slate-200 placeholder:text-slate-600 outline-none focus:ring-2 focus:ring-indigo-500 resize-none h-32 border border-slate-700 shadow-inner transition-all print:bg-white print:text-slate-800 print:border-slate-200" placeholder="Escribe aquí tus observaciones sobre la evolución del jugador, áreas a mejorar y conclusiones del ciclo..."></textarea>
+                            <h3 class="flex items-center gap-2 text-white font-bold mb-3 text-xs uppercase tracking-wider print:text-slate-800"><i data-lucide="message-square" class="w-4 h-4 text-indigo-400 print:text-indigo-600"></i> Reporte del Entrenador</h3>
+                            <textarea id="in-reporte-fisico" class="w-full bg-slate-900/50 rounded-xl p-4 text-sm font-medium text-slate-200 placeholder:text-slate-600 outline-none focus:ring-2 focus:ring-indigo-500 resize-none h-32 border border-slate-700 shadow-inner transition-all print:bg-white print:text-slate-800 print:border-slate-200" placeholder="Escribe aquí tus observaciones..."></textarea>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal Borrar / Toast (Ocultos) -->
+    <!-- MODAL DE LOGIN PARA ADMINISTRADORES -->
+    <div id="modal-auth" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-[100] flex items-center justify-center hidden opacity-0 transition-opacity">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 max-w-sm w-full mx-4 shadow-2xl transform scale-95 transition-transform" id="modal-auth-content">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-blue-100 dark:bg-blue-500/10 text-blue-600 dark:text-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 border border-blue-200 dark:border-blue-500/20">
+                    <i data-lucide="shield-check" class="w-8 h-8"></i>
+                </div>
+                <h3 class="text-2xl font-black text-slate-800 dark:text-white">Acceso Entrenador</h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Inicia sesión para editar las fichas</p>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Correo Electrónico</label>
+                    <input type="email" id="auth-email" class="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-blue-500" placeholder="admin@correo.com">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Contraseña</label>
+                    <input type="password" id="auth-pass" class="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-blue-500" placeholder="••••••••">
+                </div>
+                <p id="auth-error" class="text-xs font-bold text-red-500 hidden text-center">Credenciales incorrectas.</p>
+                <div class="flex gap-3 mt-6">
+                    <button onclick="window.cerrarModalLogin()" class="flex-1 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold py-3 rounded-xl transition-colors">Cancelar</button>
+                    <button onclick="window.iniciarSesionAdmin()" id="btn-submit-login" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-colors shadow-lg shadow-blue-500/30">Ingresar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Borrar / Toast -->
     <div id="modal-borrar" class="fixed inset-0 bg-slate-900/60 dark:bg-slate-950/80 backdrop-blur-sm z-[60] flex items-center justify-center hidden opacity-0 transition-opacity print:hidden">
-        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 max-w-sm w-full mx-4 transform scale-95 transition-transform shadow-[0_20px_50px_rgba(0,0,0,0.3)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]" id="modal-borrar-content">
-            <div class="w-20 h-20 bg-red-50 dark:bg-red-500/10 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6 border border-red-100 dark:border-red-500/20"><i data-lucide="alert-triangle" class="w-10 h-10"></i></div>
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 max-w-sm w-full mx-4 transform scale-95 transition-transform" id="modal-borrar-content">
+            <div class="w-20 h-20 bg-red-50 dark:bg-red-500/10 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6"><i data-lucide="alert-triangle" class="w-10 h-10"></i></div>
             <h3 class="text-2xl font-black text-center text-slate-800 dark:text-white mb-2">¿Borrar Atleta?</h3>
-            <p class="text-center text-slate-500 dark:text-slate-400 mb-8 font-medium leading-relaxed" id="texto-borrar">¿Estás seguro de que quieres borrar a este atleta?</p>
+            <p class="text-center text-slate-500 dark:text-slate-400 mb-8 font-medium leading-relaxed">¿Estás seguro de que quieres borrar a este atleta?</p>
             <div class="flex gap-3">
-                <button onclick="window.cancelarBorrado()" class="flex-1 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold py-3 rounded-xl transition-colors border border-transparent dark:border-slate-700">Cancelar</button>
-                <button onclick="window.ejecutarBorrado()" class="flex-1 bg-red-600 hover:bg-red-700 dark:hover:bg-red-500 text-white font-bold py-3 rounded-xl transition-colors shadow-[0_5px_15px_rgba(220,38,38,0.3)] dark:shadow-[0_0_15px_rgba(220,38,38,0.4)] border border-red-600 dark:border-red-500">Sí, borrar</button>
+                <button onclick="window.cancelarBorrado()" class="flex-1 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold py-3 rounded-xl transition-colors">Cancelar</button>
+                <button onclick="window.ejecutarBorrado()" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-xl transition-colors shadow-lg shadow-red-500/30">Sí, borrar</button>
             </div>
         </div>
     </div>
@@ -379,7 +378,7 @@
     <!-- --- LÓGICA DE FIREBASE --- -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInAnonymously, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, doc, setDoc, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const firebaseConfig = {
@@ -401,6 +400,7 @@
         window.selectedCoach = null;
         window.currentKidId = null;
         window.atletaABorrar = null; 
+        window.isAdmin = false; // MAGIA: Variable que define si puedes editar o solo mirar
         
         window.getAvatarUrl = function(nombre, apellidos) {
             const n = nombre || 'A';
@@ -415,19 +415,100 @@
         ];
 
         async function iniciarBaseDeDatos() {
-            try { await signInAnonymously(auth); } catch (error) { console.error("Error al autenticar:", error); }
+            // Iniciar como turista primero
+            try { await signInAnonymously(auth); } catch (e) { console.error(e); }
+            
             onAuthStateChanged(auth, (user) => {
                 if (user) {
+                    // Si el usuario NO es anónimo, es el Admin (Login con correo y clave)
+                    window.isAdmin = !user.isAnonymous;
+                    actualizarUI_Login();
+
                     refAtletas = collection(db, 'atletas'); 
                     onSnapshot(refAtletas, (snapshot) => {
                         window.athletes = [];
                         snapshot.forEach((doc) => { window.athletes.push({ id: doc.id, ...doc.data() }); });
                         if (window.selectedCoach) { renderCoaches(); renderAthletesGrid(window.selectedCoach); }
-                    }, (error) => { console.error("Error leyendo datos: ", error); });
+                    });
+                } else {
+                    // Si cierran sesión del admin, reconectar como turista
+                    signInAnonymously(auth);
                 }
             });
         }
 
+        // --- SISTEMA DE LOGIN DE ENTRENADOR ---
+        function actualizarUI_Login() {
+            const btnAbrirLogin = document.getElementById('btn-abrir-login');
+            const btnCerrarSesion = document.getElementById('btn-cerrar-sesion');
+            const btnNuevoAtleta = document.getElementById('btn-nuevo-atleta');
+            const btnGuardarFicha = document.getElementById('btn-guardar-ficha');
+            const btnGuardarInforme = document.getElementById('btn-guardar-informe');
+
+            if (window.isAdmin) {
+                // Modo Dios
+                btnAbrirLogin.classList.add('hidden');
+                btnCerrarSesion.classList.remove('hidden');
+                btnCerrarSesion.classList.add('flex');
+                if (btnNuevoAtleta) { btnNuevoAtleta.classList.remove('hidden'); btnNuevoAtleta.classList.add('flex'); }
+                if (btnGuardarFicha) { btnGuardarFicha.classList.remove('hidden'); btnGuardarFicha.classList.add('flex'); }
+                if (btnGuardarInforme) { btnGuardarInforme.classList.remove('hidden'); btnGuardarInforme.classList.add('flex'); }
+            } else {
+                // Modo Turista
+                btnAbrirLogin.classList.remove('hidden');
+                btnAbrirLogin.classList.add('flex');
+                btnCerrarSesion.classList.add('hidden');
+                if (btnNuevoAtleta) btnNuevoAtleta.classList.add('hidden');
+                if (btnGuardarFicha) btnGuardarFicha.classList.add('hidden');
+                if (btnGuardarInforme) btnGuardarInforme.classList.add('hidden');
+            }
+            
+            // Re-renderizamos para esconder botones de basura o bloquear inputs si está viendo fichas
+            if (window.selectedCoach) renderAthletesGrid(window.selectedCoach);
+            if (window.currentKidId) window.abrirFicha(window.athletes.find(a=>a.id===window.currentKidId));
+        }
+
+        window.mostrarModalLogin = () => {
+            const modal = document.getElementById('modal-auth');
+            document.getElementById('auth-error').classList.add('hidden');
+            document.getElementById('auth-pass').value = '';
+            modal.classList.remove('hidden');
+            setTimeout(() => { modal.classList.remove('opacity-0'); document.getElementById('modal-auth-content').classList.remove('scale-95'); }, 10);
+        }
+
+        window.cerrarModalLogin = () => {
+            const modal = document.getElementById('modal-auth');
+            modal.classList.add('opacity-0'); document.getElementById('modal-auth-content').classList.add('scale-95');
+            setTimeout(() => { modal.classList.add('hidden'); }, 300);
+        }
+
+        window.iniciarSesionAdmin = async () => {
+            const email = document.getElementById('auth-email').value;
+            const pass = document.getElementById('auth-pass').value;
+            const btn = document.getElementById('btn-submit-login');
+            const errorMsg = document.getElementById('auth-error');
+            
+            if(!email || !pass) return;
+            btn.innerText = "Cargando...";
+            errorMsg.classList.add('hidden');
+
+            try {
+                await signInWithEmailAndPassword(auth, email, pass);
+                window.cerrarModalLogin();
+                window.mostrarNotificacion("¡Modo Entrenador Activado!", "green");
+            } catch (e) {
+                console.error(e);
+                errorMsg.classList.remove('hidden');
+            }
+            btn.innerText = "Ingresar";
+        }
+
+        window.cerrarSesion = async () => {
+            await signOut(auth);
+            window.mostrarNotificacion("Sesión cerrada. Modo lectura activado.", "indigo");
+        }
+
+        // RENDERIZADOS
         function renderCoaches() {
             const container = document.getElementById('coaches-container');
             container.innerHTML = '';
@@ -442,10 +523,7 @@
                 const btn = document.createElement('button');
                 btn.className = `flex flex-col items-center p-6 w-32 md:w-40 rounded-[2rem] transition-all duration-300 border ${btnClasses}`;
                 btn.onclick = () => window.selectCoach(coach.name);
-                btn.innerHTML = `
-                    <div class="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl mb-4 shadow-inner ${coach.color} ${avatarBorder}">${coach.initials}</div>
-                    <span class="font-bold ${textClasses}">${coach.name}</span>
-                `;
+                btn.innerHTML = `<div class="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl mb-4 shadow-inner ${coach.color} ${avatarBorder}">${coach.initials}</div><span class="font-bold ${textClasses}">${coach.name}</span>`;
                 container.appendChild(btn);
             });
         }
@@ -465,10 +543,11 @@
                     const esFotoGenerica = !kid.photo || kid.photo.includes('placeholder.com') || kid.photo.includes('ui-avatars.com');
                     const fotoMostrar = esFotoGenerica ? window.getAvatarUrl(kid.name, kid.apellidos) : kid.photo;
 
+                    // Si NO es admin, no pinta el botón de basura
+                    const btnBorrar = window.isAdmin ? `<button onclick="window.confirmarBorrado('${kid.id}', '${kid.name}', event)" class="absolute top-3 right-3 bg-slate-100 dark:bg-slate-800 hover:bg-red-100 dark:hover:bg-red-500/20 text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 p-2 rounded-full transition-colors z-10 print:hidden border border-slate-200 dark:border-slate-700 hover:border-red-200 dark:hover:border-red-500/30"><i data-lucide="trash-2" class="w-4 h-4"></i></button>` : '';
+
                     card.innerHTML = `
-                        <button onclick="window.confirmarBorrado('${kid.id}', '${kid.name}', event)" class="absolute top-3 right-3 bg-slate-100 dark:bg-slate-800 hover:bg-red-100 dark:hover:bg-red-500/20 text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 p-2 rounded-full transition-colors z-10 print:hidden border border-slate-200 dark:border-slate-700 hover:border-red-200 dark:hover:border-red-500/30">
-                            <i data-lucide="trash-2" class="w-4 h-4"></i>
-                        </button>
+                        ${btnBorrar}
                         <div class="w-20 h-20 mx-auto bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden mb-4 ring-4 ring-slate-100 dark:ring-slate-900 group-hover:ring-red-100 dark:group-hover:ring-red-500/30 transition-all shadow-inner">
                             <img src="${fotoMostrar}" class="w-full h-full object-cover">
                         </div>
@@ -500,47 +579,56 @@
 
         /* Funciones Generales UI */
         window.cerrarVista = (viewToClose) => { document.getElementById(viewToClose).style.display = 'none'; document.getElementById('dashboard-view').style.display = 'block'; }
-        window.abrirInforme = () => { 
-            document.getElementById('ficha-view').style.display = 'none'; 
-            document.getElementById('informe-view').style.display = 'block'; 
-            window.scrollTo(0,0); 
-            window.actualizarGraficos(); // Dibujar las barras al abrir
-        }
-        window.volverAFicha = () => {
-            document.getElementById('informe-view').style.display = 'none'; 
-            document.getElementById('ficha-view').style.display = 'block'; 
-        }
+        window.abrirInforme = () => { document.getElementById('ficha-view').style.display = 'none'; document.getElementById('informe-view').style.display = 'block'; window.scrollTo(0,0); window.actualizarGraficos(); }
+        window.volverAFicha = () => { document.getElementById('informe-view').style.display = 'none'; document.getElementById('ficha-view').style.display = 'block'; }
 
         window.abrirFicha = function(kid) {
+            if(!kid) return;
             window.currentKidId = kid.id;
             document.getElementById('dashboard-view').style.display = 'none';
             document.getElementById('ficha-view').style.display = 'block';
             document.getElementById('informe-view').style.display = 'none';
             window.scrollTo(0,0);
 
-            // Cargar datos en la Ficha Principal
+            // Determinar si los campos son editables
+            const readOnlyAttr = window.isAdmin ? '' : 'readonly';
+            const focusClass = window.isAdmin ? 'focus-within:-translate-y-0.5 focus-within:shadow-md focus-within:border-red-300' : '';
+
             document.getElementById('ficha-equipo-nombre').innerText = `Equipo de ${kid.coach}`;
             document.getElementById('informe-nombre-atleta').innerHTML = `<i data-lucide="user" class="w-4 h-4"></i> ${kid.name || ''} ${kid.apellidos || ''}`;
+            
             document.getElementById('ficha-numero').value = kid.numero || "10";
             document.getElementById('ficha-posicion').value = kid.pos || "Jugador";
+            document.getElementById('ficha-numero').readOnly = !window.isAdmin;
+            document.getElementById('ficha-posicion').readOnly = !window.isAdmin;
 
             const imgEl = document.getElementById('ficha-img');
-            if (!kid.photo || kid.photo.includes('placeholder.com') || kid.photo.includes('ui-avatars.com')) {
-                imgEl.src = window.getAvatarUrl(kid.name, kid.apellidos);
-                document.getElementById('overlay-no-photo').classList.remove('hidden');
-                document.getElementById('overlay-has-photo').classList.add('hidden');
-            } else {
+            const overlayNoPhoto = document.getElementById('overlay-no-photo');
+            const overlayHasPhoto = document.getElementById('overlay-has-photo');
+
+            const esFotoGenerica = !kid.photo || kid.photo.includes('placeholder.com') || kid.photo.includes('ui-avatars.com');
+
+            if (!esFotoGenerica) {
                 imgEl.src = kid.photo;
-                document.getElementById('overlay-no-photo').classList.add('hidden');
-                document.getElementById('overlay-has-photo').classList.remove('hidden');
+                overlayNoPhoto.classList.add('hidden');
+                // Mostrar overlay de reemplazar/borrar SOLO si es admin
+                if(window.isAdmin) overlayHasPhoto.classList.remove('hidden');
+                else overlayHasPhoto.classList.add('hidden');
+            } else {
+                imgEl.src = window.getAvatarUrl(kid.name, kid.apellidos);
+                // Mostrar texto de "Subir foto" SOLO si es admin
+                if(window.isAdmin) overlayNoPhoto.classList.remove('hidden');
+                else overlayNoPhoto.classList.add('hidden');
+                
+                overlayHasPhoto.classList.add('hidden');
             }
 
             const gen = (label, valor, icon, id, type="text", hint="") => `
-                <div class="flex flex-col bg-white p-3 rounded-2xl border border-slate-200 shadow-sm min-w-0 transition-all focus-within:-translate-y-0.5 focus-within:shadow-md focus-within:border-red-300">
+                <div class="flex flex-col bg-white p-3 rounded-2xl border border-slate-200 shadow-sm min-w-0 transition-all ${focusClass}">
                     <div class="flex items-center justify-between mb-1">
                         <div class="flex items-center gap-2 text-red-600"><i data-lucide="${icon}" class="w-4 h-4 shrink-0"></i><span class="text-[10px] font-bold uppercase tracking-wider truncate">${label}</span></div>
                     </div>
-                    <input type="${type}" id="${id}" value="${valor}" placeholder="${hint}" class="bg-transparent font-bold text-gray-800 outline-none rounded px-1 w-full min-w-0 placeholder:text-slate-300">
+                    <input type="${type}" id="${id}" value="${valor}" placeholder="${hint}" ${readOnlyAttr} class="bg-transparent font-bold text-gray-800 outline-none rounded px-1 w-full min-w-0 placeholder:text-slate-300">
                 </div>`;
 
             document.getElementById('ficha-formularios').innerHTML = `
@@ -555,30 +643,31 @@
                     ${gen("Estudio", kid.escuela || "", "school", "in-esc")}
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div class="bg-red-50/50 p-3 md:p-4 rounded-2xl flex items-center gap-3 border border-red-100 min-w-0">
+                    <div class="bg-red-50/50 p-3 md:p-4 rounded-2xl flex items-center gap-3 border border-red-100 min-w-0 transition-all ${focusClass}">
                         <div class="bg-red-600 p-2 rounded-xl text-white shadow-sm shrink-0"><i data-lucide="ruler" class="w-5 h-5"></i></div>
-                        <div class="flex flex-col flex-1 min-w-0"><span class="text-[10px] font-bold text-red-500 uppercase tracking-widest">Estatura</span><div class="flex items-center gap-1"><input type="text" id="in-est" value="${(kid.height || '').replace(/metros|m/gi, '').trim()}" class="bg-transparent font-bold text-lg md:text-xl text-slate-800 outline-none w-full min-w-0 px-0" placeholder="0.00"><span class="text-[10px] md:text-xs font-bold text-slate-400 uppercase">m</span></div></div>
+                        <div class="flex flex-col flex-1 min-w-0"><span class="text-[10px] font-bold text-red-500 uppercase tracking-widest">Estatura</span><div class="flex items-center gap-1"><input type="text" id="in-est" value="${(kid.height || '').replace(/metros|m/gi, '').trim()}" ${readOnlyAttr} class="bg-transparent font-bold text-lg md:text-xl text-slate-800 outline-none w-full min-w-0 px-0" placeholder="0.00"><span class="text-[10px] md:text-xs font-bold text-slate-400 uppercase">m</span></div></div>
                     </div>
-                    <div class="bg-slate-50 p-3 md:p-4 rounded-2xl flex items-center gap-3 border border-slate-200 min-w-0">
+                    <div class="bg-slate-50 p-3 md:p-4 rounded-2xl flex items-center gap-3 border border-slate-200 min-w-0 transition-all ${focusClass}">
                         <div class="bg-slate-700 p-2 rounded-xl text-white shadow-sm shrink-0"><i data-lucide="weight" class="w-5 h-5"></i></div>
-                        <div class="flex flex-col flex-1 min-w-0"><span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Peso</span><div class="flex items-center gap-1"><input type="text" id="in-pes" value="${(kid.weight || '').replace(/kg|kilos/gi, '').trim()}" class="bg-transparent font-bold text-lg md:text-xl text-slate-800 outline-none w-full min-w-0 px-0" placeholder="00"><span class="text-[10px] md:text-xs font-bold text-slate-400 uppercase">kg</span></div></div>
+                        <div class="flex flex-col flex-1 min-w-0"><span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Peso</span><div class="flex items-center gap-1"><input type="text" id="in-pes" value="${(kid.weight || '').replace(/kg|kilos/gi, '').trim()}" ${readOnlyAttr} class="bg-transparent font-bold text-lg md:text-xl text-slate-800 outline-none w-full min-w-0 px-0" placeholder="00"><span class="text-[10px] md:text-xs font-bold text-slate-400 uppercase">kg</span></div></div>
                     </div>
                 </div>
                 <div class="bg-rose-50/50 rounded-2xl p-5 border border-rose-100 mt-2">
                     <h3 class="flex items-center gap-2 text-rose-600 font-bold mb-4 text-[11px] uppercase tracking-wider"><i data-lucide="stethoscope" class="w-4 h-4"></i> Historial Médico</h3>
-                    <textarea id="in-les" class="w-full bg-white rounded-xl p-3 text-sm font-medium text-slate-700 outline-none focus:ring-2 focus:ring-rose-300 h-16 mb-2 border border-rose-100 shadow-sm" placeholder="Lesiones...">${kid.lesiones || 'Ninguna'}</textarea>
-                    <textarea id="in-ope" class="w-full bg-white rounded-xl p-3 text-sm font-medium text-slate-700 outline-none focus:ring-2 focus:ring-rose-300 h-16 border border-rose-100 shadow-sm" placeholder="Operaciones...">${kid.operaciones || 'Ninguna'}</textarea>
+                    <textarea id="in-les" ${readOnlyAttr} class="w-full bg-white rounded-xl p-3 text-sm font-medium text-slate-700 outline-none focus:ring-2 focus:ring-rose-300 h-16 mb-2 border border-rose-100 shadow-sm" placeholder="Lesiones...">${kid.lesiones || 'Ninguna'}</textarea>
+                    <textarea id="in-ope" ${readOnlyAttr} class="w-full bg-white rounded-xl p-3 text-sm font-medium text-slate-700 outline-none focus:ring-2 focus:ring-rose-300 h-16 border border-rose-100 shadow-sm" placeholder="Operaciones...">${kid.operaciones || 'Ninguna'}</textarea>
                 </div>
             `;
 
             document.getElementById('ficha-trayectoria').innerHTML = `
                 <div class="bg-slate-50 rounded-2xl p-5 shadow-inner border border-slate-200 print:border-none print:shadow-none h-full">
                     <h3 class="flex items-center gap-2 text-slate-600 font-bold mb-3 text-[11px] uppercase tracking-wider"><i data-lucide="history" class="w-4 h-4 text-slate-400"></i> Trayectoria y Clubes</h3>
-                    <textarea id="in-exp" class="w-full bg-white rounded-xl p-3 text-sm font-medium text-slate-700 outline-none focus:ring-2 focus:ring-red-300 resize-none h-24 border border-slate-200 shadow-sm" placeholder="Equipos anteriores...">${kid.experiencia || ''}</textarea>
+                    <textarea id="in-exp" ${readOnlyAttr} class="w-full bg-white rounded-xl p-3 text-sm font-medium text-slate-700 outline-none focus:ring-2 focus:ring-red-300 resize-none h-24 border border-slate-200 shadow-sm" placeholder="Equipos anteriores...">${kid.experiencia || ''}</textarea>
                 </div>
             `;
 
-            // Cargar datos en la vista de Informe Físico
+            // Cargar datos Informe Físico y bloquearlos
+            const idsInforme = ['in-vel-ini', 'in-vel-fin', 'in-agi-ini', 'in-agi-fin', 'in-exp-ini', 'in-exp-fin', 'in-reporte-fisico'];
             document.getElementById('in-vel-ini').value = kid.vel_ini || '';
             document.getElementById('in-vel-fin').value = kid.vel_fin || '';
             document.getElementById('in-agi-ini').value = kid.agi_ini || '';
@@ -587,19 +676,18 @@
             document.getElementById('in-exp-fin').value = kid.exp_fin || '';
             document.getElementById('in-reporte-fisico').value = kid.reporte_fisico || '';
             
+            idsInforme.forEach(id => document.getElementById(id).readOnly = !window.isAdmin);
+            
             lucide.createIcons();
-            window.actualizarGraficos(); // Por si abren directo
+            window.actualizarGraficos(); 
         }
 
-        // LÓGICA DE LAS BARRAS ANIMADAS
         window.actualizarGraficos = function() {
             const calcularAncho = (idIni, idFin, barIniId, barFinId, valIniId, valFinId, posfix) => {
                 let vIni = parseFloat(document.getElementById(idIni).value) || 0;
                 let vFin = parseFloat(document.getElementById(idFin).value) || 0;
                 let maximo = Math.max(vIni, vFin);
-                if (maximo === 0) maximo = 1; // Prevenir división por cero
-                
-                // Calcula el porcentaje (el más alto siempre llenará la barra)
+                if (maximo === 0) maximo = 1;
                 let pctIni = (vIni / maximo) * 100;
                 let pctFin = (vFin / maximo) * 100;
 
@@ -614,13 +702,11 @@
             calcularAncho('in-exp-ini', 'in-exp-fin', 'bar-exp-ini', 'bar-exp-fin', 'val-exp-ini', 'val-exp-fin', 'cm');
         }
 
-        // UNIFICAMOS EL BOTON GUARDAR PARA QUE RESCATE DATOS DE AMBAS VISTAS
         window.guardarTodo = async function() {
-            if (!window.currentKidId) return;
+            if (!window.currentKidId || !window.isAdmin) return;
             const index = window.athletes.findIndex(a => a.id === window.currentKidId);
             let atleta = index > -1 ? window.athletes[index] : { id: window.currentKidId, coach: window.selectedCoach };
             
-            // Datos de la Ficha
             atleta.name = document.getElementById('in-nom').value;
             atleta.apellidos = document.getElementById('in-ape').value;
             atleta.fechaNacimiento = document.getElementById('in-fec').value;
@@ -635,7 +721,6 @@
             atleta.numero = document.getElementById('ficha-numero').value;
             atleta.pos = document.getElementById('ficha-posicion').value;
             
-            // Datos del Informe Físico
             atleta.vel_ini = document.getElementById('in-vel-ini').value;
             atleta.vel_fin = document.getElementById('in-vel-fin').value;
             atleta.agi_ini = document.getElementById('in-agi-ini').value;
@@ -674,7 +759,7 @@
         }
 
         window.agregarAtleta = function() {
-            if (!window.selectedCoach) return;
+            if (!window.selectedCoach || !window.isAdmin) return;
             const nuevoId = Date.now().toString(); 
             const nuevo = {
                 id: nuevoId,
@@ -691,8 +776,8 @@
             }).catch(e => window.mostrarNotificacion("Error al crear atleta", "red"));
         }
         
-        // --- UTILIDADES FOTOS Y MODALES (Sin cambios) ---
         window.subirFoto = (event) => {
+            if(!window.isAdmin) return;
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
@@ -721,6 +806,7 @@
         }
 
         window.eliminarFoto = () => {
+            if(!window.isAdmin) return;
             document.getElementById('ficha-img').src = window.getAvatarUrl(document.getElementById('in-nom').value || 'Atleta', document.getElementById('in-ape').value || '');
             document.getElementById('overlay-has-photo').classList.add('hidden');
             document.getElementById('overlay-no-photo').classList.remove('hidden');
@@ -728,6 +814,7 @@
 
         window.confirmarBorrado = function(id, nombre, event) {
             event.stopPropagation(); 
+            if(!window.isAdmin) return;
             window.atletaABorrar = id;
             document.getElementById('texto-borrar').innerText = `¿Estás seguro de que quieres borrar a ${nombre}? Esta acción no se puede deshacer.`;
             const modal = document.getElementById('modal-borrar');
@@ -743,9 +830,9 @@
         }
 
         window.ejecutarBorrado = async function() {
-            if (window.atletaABorrar && db && refAtletas) {
+            if (window.atletaABorrar && db && refAtletas && window.isAdmin) {
                 try {
-                    await deleteDoc(docRef);
+                    await deleteDoc(doc(refAtletas, window.atletaABorrar.toString()));
                     window.cancelarBorrado();
                     window.mostrarNotificacion("Atleta borrado", "red");
                 } catch (e) { window.mostrarNotificacion("Error al borrar", "red"); }
@@ -762,6 +849,9 @@
             if(color === "red") {
                 toast.classList.add('bg-red-500', 'border-red-400', 'shadow-[0_10px_20px_rgba(239,68,68,0.3)]');
                 icon.setAttribute('data-lucide', 'alert-circle');
+            } else if(color === "indigo") {
+                toast.classList.add('bg-indigo-600', 'border-indigo-500', 'shadow-[0_10px_20px_rgba(79,70,229,0.3)]');
+                icon.setAttribute('data-lucide', 'info');
             } else {
                 toast.classList.add('bg-emerald-500', 'border-emerald-400', 'shadow-[0_10px_20px_rgba(16,185,129,0.3)]');
                 icon.setAttribute('data-lucide', 'cloud-lightning');
