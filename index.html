@@ -29,10 +29,7 @@
         .animate-float-delayed { animation: float 18s ease-in-out infinite; animation-delay: -5s; }
         .animate-float-fast { animation: float 12s ease-in-out infinite; animation-delay: -2s; }
 
-        input:read-only, textarea:read-only {
-            cursor: default;
-            color: inherit;
-        }
+        input:read-only, textarea:read-only { cursor: default; color: inherit; }
 
         @media print {
             body { background: white !important; padding: 0 !important; color: black !important; }
@@ -65,7 +62,7 @@
         </div>
     </div>
 
-    <!-- BOTÓN DE LOGIN -->
+    <!-- BOTÓN DE LOGIN / LOGOUT EN LA ESQUINA -->
     <div class="absolute top-4 right-4 md:top-8 md:right-8 z-[55] print:hidden">
         <button id="btn-abrir-login" onclick="window.mostrarModalLogin()" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 dark:bg-slate-900/50 dark:hover:bg-slate-800/80 backdrop-blur-md border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg transition-all">
             <i data-lucide="lock" class="w-4 h-4"></i> Entrar
@@ -75,22 +72,22 @@
         </button>
     </div>
 
-    <!-- DASHBOARD -->
+    <!-- PANEL PRINCIPAL (DASHBOARD) -->
     <div id="dashboard-view" class="p-6 md:p-12 pb-24 max-w-5xl mx-auto fade-in">
         <div class="text-center mb-12 relative pt-8 md:pt-0">
             <div class="inline-flex items-center justify-center w-28 h-28 mb-4 relative z-10">
                 <div class="absolute inset-0 bg-white/20 dark:bg-white/5 rounded-full blur-xl"></div>
-                <img src="logo.png" alt="Logo Principal" class="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(220,38,38,0.2)] relative z-10" onerror="this.src='https://ui-avatars.com/api/?name=C+T&background=b91c1c&color=fff&size=150'">
+                <img src="logo.png" alt="Logo Principal Corazón del Táchira" class="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(220,38,38,0.2)] relative z-10" onerror="this.src='https://ui-avatars.com/api/?name=C+T&background=b91c1c&color=fff&size=150'">
             </div>
             <h1 class="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-slate-800 to-slate-500 dark:from-white dark:to-slate-400 tracking-tight drop-shadow-sm mb-2">Corazón del Táchira</h1>
             <p class="text-emerald-600 dark:text-emerald-400 font-bold flex items-center justify-center gap-2 text-sm uppercase tracking-widest bg-white/60 dark:bg-slate-900/50 backdrop-blur-sm inline-flex px-4 py-1.5 rounded-full border border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-inner">
-                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>Rendimiento en vivo
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span> Rendimiento en vivo
             </p>
         </div>
 
         <div class="mb-14">
             <h2 class="text-sm font-bold text-slate-500 dark:text-slate-400 mb-6 text-center uppercase tracking-widest flex items-center justify-center gap-4">
-                <span class="h-px w-12 bg-slate-300 dark:bg-slate-800"></span>Selecciona al Entrenador<span class="h-px w-12 bg-slate-300 dark:bg-slate-800"></span>
+                <span class="h-px w-12 bg-slate-300 dark:bg-slate-800"></span> Selecciona al Entrenador <span class="h-px w-12 bg-slate-300 dark:bg-slate-800"></span>
             </h2>
             <div id="coaches-container" class="flex flex-wrap justify-center gap-4 md:gap-6"></div>
         </div>
@@ -100,18 +97,18 @@
                 <div class="bg-red-50 dark:bg-red-500/10 p-3 rounded-xl border border-red-100 dark:border-red-500/20 hidden sm:block">
                     <i data-lucide="users" class="text-red-500 dark:text-red-400 w-6 h-6"></i>
                 </div>
-                <h2 class="text-xl sm:text-2xl font-black text-slate-800 dark:text-white flex-1 min-w-[200px]">
+                <h2 class="text-xl sm:text-2xl font-black text-slate-800 dark:text-white flex-1 min-w-[200px] drop-shadow-sm dark:drop-shadow-md">
                     Equipo de <span id="current-coach-name" class="text-red-600 dark:text-red-500"></span>
                 </h2>
                 <div class="flex items-center gap-3 w-full sm:w-auto mt-2 sm:mt-0 flex-wrap sm:flex-nowrap">
-                    <span id="athletes-count" class="bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-4 py-2 sm:py-2.5 rounded-xl text-sm font-bold text-center flex-shrink-0 border border-slate-200 dark:border-slate-700 shadow-sm dark:shadow-inner">0</span>
-                    
-                    <!-- BOTÓN NUEVO: INFORME GENERAL DEL EQUIPO -->
-                    <button onclick="window.abrirInformeEquipo()" class="flex-1 sm:flex-none justify-center bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all active:scale-95 shadow-lg border border-indigo-500">
+                    <span id="athletes-count" class="bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-4 py-2 sm:py-2.5 rounded-xl text-sm font-bold text-center flex-shrink-0 border border-slate-200 dark:border-slate-700 shadow-sm dark:shadow-inner">
+                        0
+                    </span>
+                    <button onclick="window.abrirInformeEquipo()" class="flex-1 sm:flex-none justify-center bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all active:scale-95 shadow-[0_5px_15px_rgba(79,70,229,0.2)] border border-indigo-500">
                         <i data-lucide="clipboard-list" class="w-4 h-4"></i> Informe Equipo
                     </button>
-
-                    <button id="btn-nuevo-atleta" onclick="window.agregarAtleta()" class="hidden flex-1 sm:flex-none justify-center bg-gradient-to-r from-red-500 to-red-700 dark:from-red-600 dark:to-red-800 hover:from-red-600 hover:to-red-800 text-white px-5 py-2.5 rounded-xl text-sm font-bold items-center gap-2 transition-all active:scale-95 shadow-lg border border-red-400 dark:border-red-500/50">
+                    <!-- BOTÓN NUEVO ATLETA (Oculto hasta hacer login) -->
+                    <button id="btn-nuevo-atleta" onclick="window.agregarAtleta()" class="hidden flex-1 sm:flex-none justify-center bg-gradient-to-r from-red-500 to-red-700 dark:from-red-600 dark:to-red-800 hover:from-red-600 hover:to-red-800 text-white px-5 py-2.5 rounded-xl text-sm font-bold items-center gap-2 transition-all active:scale-95 shadow-[0_5px_15px_rgba(220,38,38,0.2)] dark:shadow-[0_0_20px_rgba(220,38,38,0.3)] border border-red-400 dark:border-red-500/50">
                         <i data-lucide="user-plus" class="w-4 h-4"></i> Nuevo Atleta
                     </button>
                 </div>
@@ -120,79 +117,7 @@
         </div>
     </div>
 
-    <!-- VISTA INFORME DEL EQUIPO COMPLETO -->
-    <div id="informe-equipo-view" class="bg-slate-100 text-slate-800 p-3 sm:p-4 md:p-8 min-h-screen fade-in relative z-50" style="display: none;">
-        <div class="max-w-5xl mx-auto mb-6 flex flex-col md:flex-row justify-between gap-4 print:hidden">
-            <button onclick="window.volverAlPanelDesdeEquipo()" class="w-full md:w-auto flex justify-center items-center gap-2 bg-white text-slate-700 hover:text-indigo-600 px-4 py-3 md:py-2 rounded-full font-bold shadow-sm border border-slate-200 transition-all active:scale-95">
-                <i data-lucide="chevron-left" class="w-5 h-5"></i> Regresar al Panel
-            </button>
-            <div class="flex flex-row gap-2 md:gap-3 w-full md:w-auto">
-                <button id="btn-guardar-informe-equipo" onclick="window.guardarInformeEquipo()" class="hidden flex-1 md:flex-none justify-center items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-4 md:px-6 py-3 md:py-2 rounded-full font-bold shadow-lg transition-transform active:scale-95 border border-emerald-400">
-                    <i data-lucide="save" class="w-5 h-5"></i> Guardar Informe
-                </button>
-                <button onclick="window.print()" class="flex-1 md:flex-none flex justify-center items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-4 md:px-6 py-3 md:py-2 rounded-full font-bold shadow-lg transition-transform active:scale-95 border border-indigo-500">
-                    <i data-lucide="printer" class="w-5 h-5"></i> Imprimir Reporte
-                </button>
-            </div>
-        </div>
-
-        <div class="max-w-5xl mx-auto bg-white rounded-[2rem] shadow-2xl overflow-hidden border-8 border-white relative print:shadow-none print:border-none">
-            <div class="pt-8 pb-16 bg-gradient-to-br from-indigo-800 via-purple-900 to-slate-900 flex items-center justify-between px-6 md:px-10 text-white relative overflow-hidden">
-                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay print:hidden"></div>
-                <div class="flex-1 z-10 relative">
-                    <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 text-[10px] font-bold tracking-widest uppercase text-cyan-300 mb-3 shadow-sm print:hidden">
-                        <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>Análisis Colectivo
-                    </div>
-                    <h1 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter drop-shadow-lg text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-300 print:text-black print:bg-none">Informe General</h1>
-                    <p id="informe-equipo-nombre" class="text-indigo-200 font-bold tracking-widest uppercase text-sm mt-2 drop-shadow-sm flex items-center gap-2 print:text-slate-600"></p>
-                </div>
-                <div class="hidden md:block opacity-40 transform -translate-y-2 text-cyan-400 drop-shadow-xl print:text-slate-200 z-10">
-                    <i data-lucide="users" style="width: 80px; height: 80px;"></i>
-                </div>
-            </div>
-
-            <div class="p-6 md:p-10 -mt-10 bg-white rounded-t-[3rem] relative z-10 shadow-[0_-10px_40px_rgba(0,0,0,0.15)] print:shadow-none text-slate-800">
-                <div class="max-w-4xl mx-auto space-y-8">
-                    
-                    <!-- ZONA DE FOTO DEL EQUIPO / TÁCTICA -->
-                    <div class="relative aspect-video bg-slate-100 dark:bg-slate-800/50 rounded-[2rem] overflow-hidden border-2 border-slate-200 dark:border-slate-700 shadow-inner group">
-                        <img id="equipo-img" src="" class="w-full h-full object-contain bg-slate-900/5 hidden">
-                        
-                        <div id="overlay-no-photo-equipo" class="absolute inset-0 opacity-100 flex flex-col items-center justify-center transition-opacity print:hidden cursor-pointer hover:bg-slate-200/50" onclick="if(window.isAdmin) document.getElementById('equipo-file-upload').click()">
-                            <div class="bg-white dark:bg-slate-800 p-4 rounded-full shadow-md text-indigo-500 mb-3 border border-indigo-100 dark:border-indigo-900/50"><i data-lucide="image" class="w-8 h-8"></i></div>
-                            <p class="text-slate-500 font-bold text-sm">Añadir Foto del Equipo o Esquema Táctico</p>
-                        </div>
-                        
-                        <div id="overlay-has-photo-equipo" class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center gap-3 transition-opacity print:hidden hidden">
-                            <button onclick="document.getElementById('equipo-file-upload').click()" class="bg-slate-700 hover:bg-slate-800 text-white px-5 py-2 rounded-full font-bold text-sm flex items-center gap-2 transition-transform active:scale-95 border border-slate-500"><i data-lucide="camera" class="w-4 h-4"></i> Reemplazar Foto</button>
-                            <button onclick="window.eliminarFotoEquipo()" class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-full font-bold text-sm flex items-center gap-2 transition-transform active:scale-95 border border-red-400"><i data-lucide="trash-2" class="w-4 h-4"></i> Quitar Foto</button>
-                        </div>
-                        <input type="file" id="equipo-file-upload" class="hidden" accept="image/*" onchange="window.subirFotoEquipo(event)">
-                    </div>
-
-                    <!-- TEXTO DEL REPORTE -->
-                    <div class="bg-slate-50 border border-slate-200 rounded-3xl p-6 md:p-10 relative overflow-hidden shadow-inner print:bg-white print:border-none print:p-0 print:shadow-none">
-                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-[0.03] pointer-events-none print:opacity-10">
-                            <i data-lucide="shield" class="w-96 h-96 text-indigo-900"></i>
-                        </div>
-                        <h3 class="flex items-center gap-3 text-indigo-700 font-black mb-6 text-lg md:text-xl uppercase tracking-widest border-b-2 border-indigo-100 pb-4 print:text-black print:border-slate-300 relative z-10">
-                            <i data-lucide="pen-tool" class="w-6 h-6"></i> Reporte y Observaciones del Grupo
-                        </h3>
-                        <div class="relative z-10">
-                            <textarea id="in-reporte-equipo" class="w-full bg-white rounded-2xl p-6 text-base font-medium text-slate-700 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-indigo-500 resize-none h-[400px] border border-slate-200 shadow-sm transition-all leading-relaxed print:border-none print:shadow-none print:p-0 print:h-auto print:overflow-visible print:bg-transparent" placeholder="Describe aquí el desempeño general del equipo, los logros de la temporada, fortalezas tácticas, debilidades a trabajar y proyecciones de los muchachos..."></textarea>
-                        </div>
-                        <div class="mt-24 grid-cols-2 gap-12 text-center hidden print:grid relative z-10">
-                            <div><div class="border-t-2 border-slate-400 pt-3 mx-8"><p class="font-bold text-slate-800 text-sm uppercase tracking-wider">Firma del Entrenador</p></div></div>
-                            <div><div class="border-t-2 border-slate-400 pt-3 mx-8"><p class="font-bold text-slate-800 text-sm uppercase tracking-wider">Firma de la Dirección</p></div></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- FICHA DEPORTIVA INDIVIDUAL -->
+    <!-- FICHA DEPORTIVA (Atleta Individual) -->
     <div id="ficha-view" class="bg-slate-100 text-slate-800 p-3 sm:p-4 md:p-8 min-h-screen fade-in relative z-50" style="display: none;">
         <div class="max-w-4xl mx-auto mb-6 flex flex-col md:flex-row justify-between gap-4 print:hidden">
             <button onclick="window.cerrarVista('ficha-view')" class="w-full md:w-auto flex justify-center items-center gap-2 bg-white text-slate-700 hover:text-red-600 px-4 py-3 md:py-2 rounded-full font-bold shadow-sm border border-slate-200 transition-all active:scale-95">
@@ -202,10 +127,10 @@
                 <button onclick="window.abrirInforme()" class="flex-1 md:flex-none flex justify-center items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-4 md:px-6 py-3 md:py-2 rounded-full font-bold shadow-lg shadow-indigo-600/30 transition-transform active:scale-95 border border-indigo-500">
                     <i data-lucide="clipboard-list" class="w-5 h-5"></i> Informe<span class="hidden sm:inline"> del Atleta</span>
                 </button>
-                <button id="btn-guardar-ficha" onclick="window.guardarTodo()" class="hidden flex-1 md:flex-none justify-center items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-4 md:px-6 py-3 md:py-2 rounded-full font-bold shadow-lg transition-transform active:scale-95 border border-emerald-400">
+                <button id="btn-guardar-ficha" onclick="window.guardarTodo()" class="hidden flex-1 md:flex-none justify-center items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-4 md:px-6 py-3 md:py-2 rounded-full font-bold shadow-lg shadow-emerald-500/30 transition-transform active:scale-95 border border-emerald-400">
                     <i data-lucide="save" class="w-5 h-5"></i> Guardar
                 </button>
-                <button onclick="window.print()" class="flex-1 md:flex-none flex justify-center items-center gap-2 bg-red-600 hover:bg-red-500 text-white px-4 md:px-6 py-3 md:py-2 rounded-full font-bold shadow-lg transition-transform active:scale-95 border border-red-500">
+                <button onclick="window.print()" class="flex-1 md:flex-none flex justify-center items-center gap-2 bg-red-600 hover:bg-red-500 text-white px-4 md:px-6 py-3 md:py-2 rounded-full font-bold shadow-lg shadow-red-600/30 transition-transform active:scale-95 border border-red-500">
                     <i data-lucide="printer" class="w-5 h-5"></i> Imprimir
                 </button>
             </div>
@@ -243,6 +168,7 @@
                             </div>
                             <input type="file" id="file-upload" class="hidden" accept="image/*" onchange="window.subirFoto(event)">
                         </div>
+
                         <div class="bg-gradient-to-br from-red-600 to-red-800 rounded-[2rem] p-5 text-white shadow-xl border border-red-500 relative overflow-hidden group print:border-none print:shadow-none">
                             <div class="absolute -right-4 -top-4 opacity-10 text-white transform rotate-12 transition-transform group-hover:rotate-45"><i data-lucide="hash" class="w-24 h-24"></i></div>
                             <div class="relative z-10 flex items-center justify-between">
@@ -271,7 +197,7 @@
                 <i data-lucide="chevron-left" class="w-5 h-5"></i> Regresar a Ficha
             </button>
             <div class="flex flex-row gap-2 md:gap-3 w-full md:w-auto">
-                <button id="btn-guardar-informe" onclick="window.guardarTodo()" class="hidden flex-1 md:flex-none justify-center items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-4 md:px-6 py-3 md:py-2 rounded-full font-bold shadow-lg transition-transform active:scale-95 border border-emerald-400">
+                <button id="btn-guardar-informe-ind" onclick="window.guardarTodo()" class="hidden flex-1 md:flex-none justify-center items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-4 md:px-6 py-3 md:py-2 rounded-full font-bold shadow-lg transition-transform active:scale-95 border border-emerald-400">
                     <i data-lucide="save" class="w-5 h-5"></i> Guardar Informe
                 </button>
                 <button onclick="window.print()" class="flex-1 md:flex-none flex justify-center items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-4 md:px-6 py-3 md:py-2 rounded-full font-bold shadow-lg transition-transform active:scale-95 border border-indigo-500">
@@ -305,7 +231,7 @@
                             <i data-lucide="pen-tool" class="w-6 h-6"></i> Análisis y Observaciones Técnicas
                         </h3>
                         <div class="relative z-10">
-                            <textarea id="in-reporte-fisico" class="w-full bg-white rounded-2xl p-6 text-base font-medium text-slate-700 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-indigo-500 resize-none h-[400px] border border-slate-200 shadow-sm transition-all leading-relaxed print:border-none print:shadow-none print:p-0 print:h-auto print:overflow-visible print:bg-transparent" placeholder="Escribe aquí el informe detallado del atleta. Incluye aspectos tácticos, técnicos, físicos y su evolución reciente..."></textarea>
+                            <textarea id="in-reporte-fisico" class="w-full bg-white rounded-2xl p-6 text-base font-medium text-slate-700 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-indigo-500 resize-none h-[400px] border border-slate-200 shadow-sm transition-all leading-relaxed print:border-none print:shadow-none print:p-0 print:h-auto print:overflow-visible print:bg-transparent" placeholder="Escribe aquí el informe detallado del atleta..."></textarea>
                         </div>
                         <div class="mt-24 grid-cols-2 gap-12 text-center hidden print:grid relative z-10">
                             <div><div class="border-t-2 border-slate-400 pt-3 mx-8"><p class="font-bold text-slate-800 text-sm uppercase tracking-wider">Firma del Entrenador</p></div></div>
@@ -317,7 +243,92 @@
         </div>
     </div>
 
-    <!-- MODALES VARIOS (Login, Borrar, Toast) -->
+    <!-- VISTA INFORME GENERAL DEL EQUIPO (NUEVO REDISEÑO CON COLLAGE) -->
+    <div id="informe-equipo-view" class="bg-slate-100 text-slate-800 p-3 sm:p-4 md:p-8 min-h-screen fade-in relative z-50" style="display: none;">
+        <div class="max-w-5xl mx-auto mb-6 flex flex-col md:flex-row justify-between gap-4 print:hidden">
+            <button onclick="window.volverAlPanelDesdeEquipo()" class="w-full md:w-auto flex justify-center items-center gap-2 bg-white text-slate-700 hover:text-indigo-600 px-4 py-3 md:py-2 rounded-full font-bold shadow-sm border border-slate-200 transition-all active:scale-95">
+                <i data-lucide="chevron-left" class="w-5 h-5"></i> Regresar al Panel
+            </button>
+            <div class="flex flex-row gap-2 md:gap-3 w-full md:w-auto">
+                <button id="btn-guardar-informe-equipo" onclick="window.guardarInformeEquipo()" class="hidden flex-1 md:flex-none justify-center items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-4 md:px-6 py-3 md:py-2 rounded-full font-bold shadow-lg transition-transform active:scale-95 border border-emerald-400">
+                    <i data-lucide="save" class="w-5 h-5"></i> Guardar Informe
+                </button>
+                <button onclick="window.print()" class="flex-1 md:flex-none flex justify-center items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-4 md:px-6 py-3 md:py-2 rounded-full font-bold shadow-lg transition-transform active:scale-95 border border-indigo-500">
+                    <i data-lucide="printer" class="w-5 h-5"></i> Imprimir Reporte
+                </button>
+            </div>
+        </div>
+
+        <div class="max-w-5xl mx-auto bg-white rounded-[2rem] shadow-2xl overflow-hidden border-8 border-white relative print:shadow-none print:border-none">
+            <div class="pt-8 pb-16 bg-gradient-to-br from-indigo-800 via-purple-900 to-slate-900 flex items-center justify-between px-6 md:px-10 text-white relative overflow-hidden">
+                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay print:hidden"></div>
+                <div class="flex-1 z-10 relative">
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 text-[10px] font-bold tracking-widest uppercase text-cyan-300 mb-3 shadow-sm print:hidden">
+                        <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>Análisis Colectivo
+                    </div>
+                    <h1 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter drop-shadow-lg text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-300 print:text-black print:bg-none">Informe General</h1>
+                    <p id="informe-equipo-nombre" class="text-indigo-200 font-bold tracking-widest uppercase text-sm mt-2 drop-shadow-sm flex items-center gap-2 print:text-slate-600"></p>
+                </div>
+                <div class="hidden md:block opacity-40 transform -translate-y-2 text-cyan-400 drop-shadow-xl print:text-slate-200 z-10">
+                    <i data-lucide="users" style="width: 80px; height: 80px;"></i>
+                </div>
+            </div>
+
+            <div class="p-6 md:p-10 -mt-10 bg-white rounded-t-[3rem] relative z-10 shadow-[0_-10px_40px_rgba(0,0,0,0.15)] print:shadow-none text-slate-800">
+                <div class="max-w-4xl mx-auto space-y-8">
+                    
+                    <!-- TEXTO DEL REPORTE (PRIORIDAD) -->
+                    <div class="bg-slate-50 border border-slate-200 rounded-3xl p-6 md:p-10 relative overflow-hidden shadow-inner print:bg-white print:border-none print:p-0 print:shadow-none">
+                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-[0.03] pointer-events-none print:opacity-10">
+                            <i data-lucide="shield" class="w-96 h-96 text-indigo-900"></i>
+                        </div>
+                        <h3 class="flex items-center gap-3 text-indigo-700 font-black mb-6 text-lg md:text-xl uppercase tracking-widest border-b-2 border-indigo-100 pb-4 print:text-black print:border-slate-300 relative z-10">
+                            <i data-lucide="pen-tool" class="w-6 h-6"></i> Reporte y Observaciones del Grupo
+                        </h3>
+                        <div class="relative z-10">
+                            <textarea id="in-reporte-equipo" class="w-full bg-white rounded-2xl p-6 text-base font-medium text-slate-700 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-indigo-500 resize-none h-[250px] border border-slate-200 shadow-sm transition-all leading-relaxed print:border-none print:shadow-none print:p-0 print:h-auto print:overflow-visible print:bg-transparent" placeholder="Describe aquí el desempeño general del equipo, los logros de la temporada, fortalezas tácticas, debilidades a trabajar y proyecciones de los muchachos..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- GALERÍA TÁCTICA / COLLAGE (NUEVO) -->
+                    <div class="bg-slate-50 border border-slate-200 rounded-3xl p-6 md:p-8 relative shadow-inner print:bg-white print:border-none print:p-0 print:shadow-none">
+                        <div class="flex justify-between items-center border-b-2 border-indigo-100 pb-4 mb-6 print:border-slate-300">
+                            <h3 class="flex items-center gap-3 text-indigo-700 font-black text-lg md:text-xl uppercase tracking-widest print:text-black">
+                                <i data-lucide="image" class="w-6 h-6"></i> Galería Táctica
+                            </h3>
+                            <!-- Botón de añadir foto (Oculto en modo lectura o impresión) -->
+                            <button id="btn-add-foto-equipo" onclick="document.getElementById('equipo-file-upload').click()" class="hidden items-center gap-2 bg-indigo-100 hover:bg-indigo-200 text-indigo-700 px-4 py-2 rounded-full text-sm font-bold transition-all active:scale-95 print:hidden border border-indigo-200">
+                                <i data-lucide="plus" class="w-4 h-4"></i> Añadir Foto
+                            </button>
+                            <input type="file" id="equipo-file-upload" class="hidden" accept="image/*" multiple onchange="window.subirFotoEquipo(event)">
+                        </div>
+
+                        <!-- Grid de Imágenes -->
+                        <div id="equipo-collage-grid" class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                            <!-- Las imágenes se inyectan por JS -->
+                        </div>
+                        
+                        <p id="equipo-collage-vacio" class="text-center text-slate-400 font-medium py-8 hidden">No hay imágenes en la galería táctica.</p>
+                    </div>
+
+                    <div class="mt-24 grid-cols-2 gap-12 text-center hidden print:grid relative z-10">
+                        <div><div class="border-t-2 border-slate-400 pt-3 mx-8"><p class="font-bold text-slate-800 text-sm uppercase tracking-wider">Firma del Entrenador</p></div></div>
+                        <div><div class="border-t-2 border-slate-400 pt-3 mx-8"><p class="font-bold text-slate-800 text-sm uppercase tracking-wider">Firma de la Dirección</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PARA VER IMÁGENES DEL COLLAGE EN GRANDE -->
+    <div id="modal-imagen" class="fixed inset-0 bg-slate-950/90 backdrop-blur-sm z-[110] flex items-center justify-center hidden opacity-0 transition-opacity print:hidden" onclick="window.cerrarModalImagen()">
+        <div class="relative max-w-5xl w-full mx-4 transform scale-95 transition-transform" id="modal-imagen-content" onclick="event.stopPropagation()">
+            <button onclick="window.cerrarModalImagen()" class="absolute -top-12 right-0 text-white hover:text-red-400"><i data-lucide="x" class="w-8 h-8"></i></button>
+            <img id="modal-imagen-src" src="" class="w-full h-auto max-h-[85vh] object-contain rounded-xl shadow-2xl border border-white/10">
+        </div>
+    </div>
+
+    <!-- MODALES VARIOS (Login, Borrar) -->
     <div id="modal-auth" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-[100] flex items-center justify-center hidden opacity-0 transition-opacity">
         <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 max-w-sm w-full mx-4 shadow-2xl transform scale-95 transition-transform" id="modal-auth-content">
             <div class="text-center mb-6">
@@ -349,10 +360,12 @@
         </div>
     </div>
 
+    <!-- Toast Notification -->
     <div id="toast-notificacion" class="fixed top-5 right-5 bg-emerald-500 text-white px-6 py-3 rounded-xl shadow-lg transform -translate-y-20 opacity-0 transition-all duration-300 z-[70] flex items-center gap-3 print:hidden">
         <i data-lucide="cloud-lightning" id="toast-icon" class="w-5 h-5"></i><span id="toast-mensaje" class="font-bold"></span>
     </div>
 
+    <!-- SCRIPTS CORE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -377,6 +390,7 @@
 
         window.athletes = [];
         window.equiposData = {}; 
+        window.currentEquipoImages = []; // Array mágico para el collage
         window.selectedCoach = null;
         window.currentKidId = null;
         window.atletaABorrar = null; 
@@ -415,21 +429,28 @@
         }
 
         function actualizarUI_Login() {
-            const ids = ['btn-abrir-login', 'btn-cerrar-sesion', 'btn-nuevo-atleta', 'btn-guardar-ficha', 'btn-guardar-informe', 'btn-guardar-informe-equipo'];
+            const ids = ['btn-abrir-login', 'btn-cerrar-sesion', 'btn-nuevo-atleta', 'btn-guardar-ficha', 'btn-guardar-informe-ind', 'btn-guardar-informe-equipo', 'btn-add-foto-equipo'];
             ids.forEach(id => {
                 const el = document.getElementById(id);
                 if (el) {
                     if (window.isAdmin) {
                         el.classList.contains('hidden') && el.classList.remove('hidden');
                         if (id === 'btn-abrir-login') el.classList.add('hidden');
+                        if (id === 'btn-nuevo-atleta' || id === 'btn-cerrar-sesion' || id.startsWith('btn-guardar') || id === 'btn-add-foto-equipo') el.classList.add('flex');
                     } else {
                         el.classList.add('hidden');
                         if (id === 'btn-abrir-login') el.classList.remove('hidden');
+                        el.classList.remove('flex');
                     }
                 }
             });
             if (window.selectedCoach) renderAthletesGrid(window.selectedCoach);
             if (window.currentKidId) window.abrirFicha(window.athletes.find(a=>a.id===window.currentKidId));
+            
+            // Re-render collage just in case admin status changed to show/hide delete buttons
+            if (document.getElementById('informe-equipo-view').style.display === 'block') {
+                 window.renderCollageEquipo();
+            }
         }
 
         window.mostrarModalLogin = () => {
@@ -448,7 +469,7 @@
             try {
                 await signInWithEmailAndPassword(auth, email, pass);
                 window.cerrarModalLogin();
-                window.mostrarNotificacion("¡Modo Entrenador!", "green");
+                window.mostrarNotificacion("¡Modo Entrenador activado!", "green");
             } catch (e) { document.getElementById('auth-error').classList.remove('hidden'); }
         }
         window.cerrarSesion = async () => { await signOut(auth); window.mostrarNotificacion("Sesión cerrada", "indigo"); }
@@ -475,17 +496,17 @@
         function renderAthletesGrid(coachName) {
             const filtrados = window.athletes.filter(a => a.coach === coachName);
             document.getElementById('current-coach-name').innerText = coachName;
-            document.getElementById('athletes-count').innerText = `${filtrados.length} Atletas`;
+            document.getElementById('athletes-count').innerText = `${filtrados.length}`;
             const grid = document.getElementById('athletes-grid');
             grid.innerHTML = '';
             filtrados.forEach(kid => {
                 const card = document.createElement('div');
-                card.className = "relative bg-white/80 dark:bg-slate-900/50 p-5 rounded-[2rem] shadow-md border border-slate-200 dark:border-slate-800 group text-center cursor-pointer";
+                card.className = "relative bg-white/80 dark:bg-slate-900/50 p-5 rounded-[2rem] shadow-md border border-slate-200 dark:border-slate-800 group text-center cursor-pointer hover:shadow-lg hover:-translate-y-1 transition-all hover:border-red-400 dark:hover:border-red-500/50";
                 card.onclick = () => window.abrirFicha(kid);
                 const foto = (!kid.photo || kid.photo.includes('ui-avatars.com')) ? window.getAvatarUrl(kid.name, kid.apellidos) : kid.photo;
                 
                 const safeName = (kid.name || '').replace(/'/g, "\\'");
-                const btnBorrar = window.isAdmin ? `<button onclick="window.confirmarBorrado('${kid.id}', '${safeName}', event)" class="absolute top-3 right-3 text-slate-400 hover:text-red-500"><i data-lucide="trash-2" class="w-4 h-4"></i></button>` : '';
+                const btnBorrar = window.isAdmin ? `<button onclick="window.confirmarBorrado('${kid.id}', '${safeName}', event)" class="absolute top-3 right-3 text-slate-400 hover:text-red-500 bg-white/50 dark:bg-slate-800/50 p-1.5 rounded-full z-10"><i data-lucide="trash-2" class="w-4 h-4"></i></button>` : '';
                 card.innerHTML = `
                     ${btnBorrar}
                     <div class="w-20 h-20 mx-auto rounded-full overflow-hidden mb-4 ring-4 ring-slate-100 dark:ring-slate-900">
@@ -522,7 +543,7 @@
         window.abrirInforme = () => { document.getElementById('ficha-view').style.display='none'; document.getElementById('informe-view').style.display='block'; window.scrollTo(0,0); }
         window.volverAFicha = () => { document.getElementById('informe-view').style.display='none'; document.getElementById('ficha-view').style.display='block'; }
 
-        // MÓDULO: INFORME DE EQUIPO
+        // --- MÓDULO: INFORME DE EQUIPO & COLLAGE ---
         window.abrirInformeEquipo = () => {
             document.getElementById('dashboard-view').style.display = 'none';
             document.getElementById('informe-equipo-view').style.display = 'block';
@@ -534,21 +555,9 @@
             document.getElementById('in-reporte-equipo').value = data.report || '';
             document.getElementById('in-reporte-equipo').readOnly = !window.isAdmin;
 
-            const imgEl = document.getElementById('equipo-img');
-            const noF = document.getElementById('overlay-no-photo-equipo');
-            const hasF = document.getElementById('overlay-has-photo-equipo');
-
-            if (data.image) {
-                imgEl.src = data.image;
-                imgEl.classList.remove('hidden');
-                noF.classList.add('hidden');
-                if(window.isAdmin) hasF.classList.remove('hidden'); else hasF.classList.add('hidden');
-            } else {
-                imgEl.src = "";
-                imgEl.classList.add('hidden');
-                if(window.isAdmin) noF.classList.remove('hidden'); else noF.classList.add('hidden');
-                hasF.classList.add('hidden');
-            }
+            // Cargar imágenes del collage
+            window.currentEquipoImages = data.images || [];
+            window.renderCollageEquipo();
         };
 
         window.volverAlPanelDesdeEquipo = () => {
@@ -558,58 +567,101 @@
 
         window.subirFotoEquipo = (ev) => {
             if(!window.isAdmin) return;
-            const f = ev.target.files[0];
-            if(!f) return;
-            const r = new FileReader();
-            r.onload = (e) => {
-                const i = new Image();
-                i.onload = () => {
-                    const c = document.createElement('canvas');
-                    const MAX_WIDTH = 1200; const MAX_HEIGHT = 1200;
-                    let width = i.width; let height = i.height;
+            const files = ev.target.files;
+            if(!files || files.length === 0) return;
 
-                    if (width > height) { if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; } } 
-                    else { if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; } }
+            if (window.currentEquipoImages.length + files.length > 6) {
+                window.mostrarNotificacion("¡Guardiola, cálmate! Máximo 6 fotos", "red");
+                return;
+            }
 
-                    c.width = width; c.height = height;
-                    c.getContext('2d').drawImage(i, 0, 0, width, height);
+            Array.from(files).forEach(f => {
+                const r = new FileReader();
+                r.onload = (e) => {
+                    const i = new Image();
+                    i.onload = () => {
+                        const c = document.createElement('canvas');
+                        const MAX_WIDTH = 800; const MAX_HEIGHT = 800;
+                        let width = i.width; let height = i.height;
 
-                    const imgEl = document.getElementById('equipo-img');
-                    imgEl.src = c.toDataURL('image/jpeg', 0.8);
-                    imgEl.classList.remove('hidden');
-                    document.getElementById('overlay-no-photo-equipo').classList.add('hidden');
-                    document.getElementById('overlay-has-photo-equipo').classList.remove('hidden');
+                        if (width > height) { if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; } } 
+                        else { if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; } }
+
+                        c.width = width; c.height = height;
+                        c.getContext('2d').drawImage(i, 0, 0, width, height);
+
+                        window.currentEquipoImages.push(c.toDataURL('image/jpeg', 0.7));
+                        window.renderCollageEquipo();
+                    };
+                    i.src = e.target.result;
                 };
-                i.src = e.target.result;
-            };
-            r.readAsDataURL(f);
+                r.readAsDataURL(f);
+            });
         };
 
-        window.eliminarFotoEquipo = () => {
+        window.renderCollageEquipo = () => {
+            const grid = document.getElementById('equipo-collage-grid');
+            const vacioText = document.getElementById('equipo-collage-vacio');
+            grid.innerHTML = '';
+            
+            if (window.currentEquipoImages.length === 0) {
+                vacioText.classList.remove('hidden');
+            } else {
+                vacioText.classList.add('hidden');
+                window.currentEquipoImages.forEach((imgSrc, idx) => {
+                    const div = document.createElement('div');
+                    div.className = "relative aspect-video bg-slate-200 dark:bg-slate-800 rounded-xl overflow-hidden shadow-sm group border border-slate-300 dark:border-slate-700";
+                    const btnBorrar = window.isAdmin ? `<button onclick="window.eliminarFotoEquipo(${idx}, event)" class="absolute top-2 right-2 bg-red-500/80 hover:bg-red-600 text-white p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity z-10"><i data-lucide="trash-2" class="w-4 h-4"></i></button>` : '';
+                    
+                    div.innerHTML = `
+                        <img src="${imgSrc}" class="w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform duration-300" onclick="window.verImagenCompleta('${imgSrc}')">
+                        ${btnBorrar}
+                    `;
+                    grid.appendChild(div);
+                });
+            }
+            lucide.createIcons();
+        };
+
+        window.eliminarFotoEquipo = (idx, event) => {
             if(!window.isAdmin) return;
-            const imgEl = document.getElementById('equipo-img');
-            imgEl.src = "";
-            imgEl.classList.add('hidden');
-            document.getElementById('overlay-has-photo-equipo').classList.add('hidden');
-            document.getElementById('overlay-no-photo-equipo').classList.remove('hidden');
+            event.stopPropagation();
+            window.currentEquipoImages.splice(idx, 1);
+            window.renderCollageEquipo();
         };
 
         window.guardarInformeEquipo = async () => {
             if(!window.isAdmin || !window.selectedCoach) return;
             const text = document.getElementById('in-reporte-equipo').value;
-            const imgEl = document.getElementById('equipo-img');
-            const image = !imgEl.classList.contains('hidden') ? imgEl.src : "";
 
             try {
                 document.getElementById('toast-mensaje').innerText = "Guardando...";
                 const toast = document.getElementById('toast-notificacion');
                 toast.className = 'fixed top-5 right-5 text-white px-6 py-3 rounded-xl shadow-lg transform opacity-100 transition-all duration-300 z-[70] flex items-center gap-3 print:hidden bg-blue-500 border border-blue-400 translate-y-0';
 
-                await setDoc(doc(refEquipos, window.selectedCoach), { report: text, image: image }, { merge: true });
+                await setDoc(doc(refEquipos, window.selectedCoach), { 
+                    report: text, 
+                    images: window.currentEquipoImages 
+                }, { merge: true });
+                
                 window.mostrarNotificacion("¡Informe del equipo guardado!", "green");
             } catch (e) { window.mostrarNotificacion("Error al guardar", "red"); }
         };
 
+        // Ver imagen grande del collage
+        window.verImagenCompleta = (src) => {
+            document.getElementById('modal-imagen-src').src = src;
+            const modal = document.getElementById('modal-imagen');
+            modal.classList.remove('hidden');
+            setTimeout(() => { modal.classList.remove('opacity-0'); document.getElementById('modal-imagen-content').classList.remove('scale-95'); }, 10);
+        };
+        window.cerrarModalImagen = () => {
+            const modal = document.getElementById('modal-imagen');
+            modal.classList.add('opacity-0'); document.getElementById('modal-imagen-content').classList.add('scale-95');
+            setTimeout(() => { modal.classList.add('hidden'); document.getElementById('modal-imagen-src').src = ""; }, 300);
+        };
+
+        // --- FICHA INDIVIDUAL ---
         window.abrirFicha = function(kid) {
             if(!kid) return;
             window.currentKidId = kid.id;
