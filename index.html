@@ -48,6 +48,7 @@
 
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 font-sans min-h-screen relative overflow-x-hidden selection:bg-red-500/30 transition-colors duration-500">
 
+    <!-- FONDO MODERNO PREMIUM -->
     <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none print:hidden transition-colors duration-700 bg-slate-50 dark:bg-slate-950">
         <div class="absolute inset-0 dark:hidden">
             <div class="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-gradient-to-br from-red-200/60 to-rose-100/50 blur-[80px] animate-float-slow"></div>
@@ -64,6 +65,7 @@
         </div>
     </div>
 
+    <!-- BOTÓN DE LOGIN -->
     <div class="absolute top-4 right-4 md:top-8 md:right-8 z-[55] print:hidden">
         <button id="btn-abrir-login" onclick="window.mostrarModalLogin()" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 dark:bg-slate-900/50 dark:hover:bg-slate-800/80 backdrop-blur-md border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg transition-all">
             <i data-lucide="lock" class="w-4 h-4"></i> Entrar
@@ -73,6 +75,7 @@
         </button>
     </div>
 
+    <!-- DASHBOARD -->
     <div id="dashboard-view" class="p-6 md:p-12 pb-24 max-w-5xl mx-auto fade-in">
         <div class="text-center mb-12 relative pt-8 md:pt-0">
             <div class="inline-flex items-center justify-center w-28 h-28 mb-4 relative z-10">
@@ -111,6 +114,7 @@
         </div>
     </div>
 
+    <!-- FICHA DEPORTIVA -->
     <div id="ficha-view" class="bg-slate-100 text-slate-800 p-3 sm:p-4 md:p-8 min-h-screen fade-in relative z-50" style="display: none;">
         <div class="max-w-4xl mx-auto mb-6 flex flex-col md:flex-row justify-between gap-4 print:hidden">
             <button onclick="window.cerrarVista('ficha-view')" class="w-full md:w-auto flex justify-center items-center gap-2 bg-white text-slate-700 hover:text-red-600 px-4 py-3 md:py-2 rounded-full font-bold shadow-sm border border-slate-200 transition-all active:scale-95">
@@ -182,6 +186,7 @@
         </div>
     </div>
 
+    <!-- VISTA DE INFORME DEL ATLETA -->
     <div id="informe-view" class="bg-slate-100 text-slate-800 p-3 sm:p-4 md:p-8 min-h-screen fade-in relative z-50" style="display: none;">
         <div class="max-w-4xl mx-auto mb-6 flex flex-col md:flex-row justify-between gap-4 print:hidden">
             <button onclick="window.volverAFicha()" class="w-full md:w-auto flex justify-center items-center gap-2 bg-white text-slate-700 hover:text-indigo-600 px-4 py-3 md:py-2 rounded-full font-bold shadow-sm border border-slate-200 transition-all active:scale-95">
@@ -234,6 +239,7 @@
         </div>
     </div>
 
+    <!-- MODAL AUTH -->
     <div id="modal-auth" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-[100] flex items-center justify-center hidden opacity-0 transition-opacity">
         <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 max-w-sm w-full mx-4 shadow-2xl transform scale-95 transition-transform" id="modal-auth-content">
             <div class="text-center mb-6">
@@ -253,6 +259,7 @@
         </div>
     </div>
 
+    <!-- MODAL BORRAR -->
     <div id="modal-borrar" class="fixed inset-0 bg-slate-900/60 dark:bg-slate-950/80 backdrop-blur-sm z-[60] flex items-center justify-center hidden opacity-0 transition-opacity print:hidden">
         <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 max-w-sm w-full mx-4 transform scale-95 transition-transform" id="modal-borrar-content">
             <div class="w-20 h-20 bg-red-50 dark:bg-red-500/10 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6"><i data-lucide="alert-triangle" class="w-10 h-10"></i></div>
@@ -383,7 +390,21 @@
                 card.onclick = () => window.abrirFicha(kid);
                 const foto = (!kid.photo || kid.photo.includes('ui-avatars.com')) ? window.getAvatarUrl(kid.name, kid.apellidos) : kid.photo;
                 const btnBorrar = window.isAdmin ? `<button onclick="window.confirmarBorrado('${kid.id}', '${kid.name}', event)" class="absolute top-3 right-3 text-slate-400 hover:text-red-500"><i data-lucide="trash-2" class="w-4 h-4"></i></button>` : '';
-                card.innerHTML = `${btnBorrar}<div class="w-20 h-20 mx-auto rounded-full overflow-hidden mb-4 ring-4 ring-slate-100 dark:ring-slate-900"><img src="${foto}" class="w-full h-full object-cover"></div><h3 class="font-bold text-lg truncate">${kid.name}</h3><p class="text-[10px] text-red-500 uppercase font-bold">${kid.pos || 'Jugador'}</p>`;
+                card.innerHTML = `
+                    ${btnBorrar}
+                    <div class="w-20 h-20 mx-auto rounded-full overflow-hidden mb-4 ring-4 ring-slate-100 dark:ring-slate-900">
+                        <img src="${foto}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="mb-2 px-2">
+                        <h3 class="font-bold text-slate-800 dark:text-white text-lg drop-shadow-sm leading-tight truncate">${kid.name}</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm font-semibold truncate">${kid.apellidos || ''}</p>
+                    </div>
+                    <p class="text-[10px] text-red-500 uppercase font-bold bg-red-50 dark:bg-red-500/10 inline-block px-2 py-1 rounded-md mb-2">${kid.pos || 'Jugador'}</p>
+                    <div class="flex justify-center gap-2 text-xs font-bold text-slate-600 dark:text-slate-300">
+                        <span class="bg-slate-100 dark:bg-slate-950/80 px-3 py-1.5 rounded-lg">${kid.age || '-'}</span>
+                        <span class="bg-slate-100 dark:bg-slate-950/80 px-3 py-1.5 rounded-lg flex items-center gap-1"><i data-lucide="weight" class="w-3 h-3"></i> ${kid.weight || '-'}</span>
+                    </div>
+                `;
                 grid.appendChild(card);
             });
             document.getElementById('athletes-section').style.display = 'block';
@@ -487,7 +508,7 @@
         window.agregarAtleta = async () => {
             if(!window.isAdmin) return;
             const nId = Date.now().toString();
-            const nAt = { id: nId, coach: window.selectedCoach, name: "Nuevo Atleta", photo: "" };
+            const nAt = { id: nId, coach: window.selectedCoach, name: "Nuevo", apellidos: "Atleta", photo: "" };
             try {
                 await setDoc(doc(refAtletas, nId), nAt);
                 window.abrirFicha(nAt);
